@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:orientation="vertical" >
+  
+    <LinearLayout 
+    android:gravity="center_vertical" 
+    android:orientation="horizontal"  
+    android:layout_width="fill_parent" 
+    android:layout_height="44.0dip"
+    android:background="@drawable/title_bar_bg"> 
+    
+        <TextView 
+        android:textSize="18.0sp" 
+        android:id = "@+id/tv_aboutus"
+        android:textColor="#44444444"
+        android:padding="12.0dip" 
+        android:layout_width="fill_parent"
+        android:layout_height="46.0dip"    
+        android:text="关于我们" />
+        
+        
+    </LinearLayout>
+    
+    
+    <ScrollView 
+    android:background="#ffeeeeee" 
+    android:layout_width="fill_parent" 
+    android:layout_height="fill_parent" 
+    android:layout_weight="1.0">
+    
+      	<LinearLayout 
+      	android:orientation="vertical" 
+      	android:paddingBottom="10.0dip" 
+      	android:layout_width="fill_parent" 
+      	android:layout_height="fill_parent" 
+      	android:isScrollContainer="true">
+      	
+      	
+      		<!-- 第一个白框BEGIN -->
+     	 	<LinearLayout 
+			android:orientation="vertical" 
+			android:background="@drawable/shape_bg" 
+			android:layout_width="fill_parent" 
+			android:layout_height="wrap_content" 
+			android:layout_marginLeft="15.0dip" 
+			android:layout_marginRight="15.0dip"
+			android:layout_marginTop="50dip"
+			android:gravity="center">
+			
+				<LinearLayout 
+				android:gravity="center_horizontal" 
+				android:orientation="horizontal" 
+				android:padding="10.0dip" 
+				android:layout_width="fill_parent" 
+				android:layout_height="wrap_content" 
+				android:minHeight="60.0dip">
+				
+					<ImageView 
+					android:layout_gravity="top" 
+					android:layout_marginLeft="25dip"
+					android:layout_width="wrap_content" 
+					android:layout_height="wrap_content" 
+					android:src="@drawable/dingshangqu"/>
+					
+	                    <LinearLayout 
+	                     android:orientation="vertical"
+	                     android:layout_width="fill_parent" 
+	                     android:layout_height="wrap_content"
+	                     android:gravity="center_horizontal" 
+	                     android:layout_marginLeft="10.0dip">
+	                     	<TextView 
+		                     	android:textSize="14.0sp" 
+		                     	android:textColor="#ff545454" 
+		                     	android:gravity="center_vertical" 
+		                     	android:layout_width="fill_parent" 
+		                     	android:layout_height="wrap_content" 
+		                     	android:text="" 
+		                     	android:layout_marginTop="4.0dip" />
+	                        <TextView 
+		                        android:textSize="18.0sp" 
+		                        android:textColor="@android:color/black" 
+		                        android:gravity="center_vertical" 
+		                        android:layout_width="fill_parent" 
+		                        android:layout_height="wrap_content"
+		                        android:layout_marginLeft="10dip" 
+		                        android:text="MYNOTE 客户端" />	                    
+	                    </LinearLayout>	                    
+	            </LinearLayout>
+				<LinearLayout
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+>
+					<TextView 
+				        	android:textSize="14.0sp" 
+				        	android:textColor="#ff545454" 
+				        	android:layout_width="wrap_content" 
+				        	android:layout_height="wrap_content" 
+				        	android:text="@string/aboutUsLabel" 
+				        	android:minLines="7"/>  
+				</LinearLayout>	           
+	        </LinearLayout>
+	        <!-- 第一个白框end -->
+        
+        </LinearLayout> 
+        
+    </ScrollView>
+  
+
+</LinearLayout>
