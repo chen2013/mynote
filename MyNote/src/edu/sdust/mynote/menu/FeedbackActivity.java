@@ -15,7 +15,7 @@ public class FeedbackActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.feedback_layout);
 		
-		Button feedbackBtn=(Button)this.findViewById(R.id.register_back_btn);
+		Button feedbackBtn=(Button)this.findViewById(R.id.feedback_back_btn);
 		feedbackBtn.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v){
@@ -23,6 +23,4 @@ public class FeedbackActivity extends Activity {
 			}
 		});
 	}
-
-	
 }

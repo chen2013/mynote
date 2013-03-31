@@ -33,19 +33,6 @@ public class LoginActivity extends Activity {
 	
     });
     
-    Button loginButton=(Button)this.findViewById(R.id.login_btn_login);
-    loginButton.setOnClickListener(new OnClickListener(){
-
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
-			startActivity(mainIntent);
-			LoginActivity.this.finish();
-		}
-    	
-    });
-    
     }
     
     //对菜单进行重写
