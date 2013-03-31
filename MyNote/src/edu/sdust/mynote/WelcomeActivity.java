@@ -30,8 +30,8 @@ public class WelcomeActivity extends Activity {
                  WelcomeActivity.this.finish(); 
         	 }
         	 else{
-        		 Intent loginIntent = new Intent(WelcomeActivity.this,LoginActivity.class); 
-                 WelcomeActivity.this.startActivity(loginIntent); 
+        		 Intent mainIntent = new Intent(WelcomeActivity.this,MainActivity.class); 
+                 WelcomeActivity.this.startActivity(mainIntent); 
                  WelcomeActivity.this.finish();
         	 }
          } 

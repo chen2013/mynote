@@ -8,7 +8,7 @@
     <RelativeLayout
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
-	    android:layout_height="45dip"
+	    android:layout_height="47dip"
 	    android:background="@drawable/title_bar_bg">
 	    <Button
 		    android:id="@+id/feedback_back_btn"

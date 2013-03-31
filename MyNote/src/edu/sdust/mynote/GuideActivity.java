@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.sdust.mynote.R;
+import edu.sdust.mynote.adapter.GuidePagerAdapter;
 
 import android.app.Activity;
 import android.content.Intent;

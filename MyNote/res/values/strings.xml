@@ -19,4 +19,19 @@
     <string name="feedbackcontent">反馈内容</string>
     <string name="feedbackthank">感谢对我们软件的支持，您的建议我们会及时采纳~~~~</string>
     <string name="main_tilte">mynote</string>
+    <string name="registercommit">注册</string>
+    
+    
+    
+    
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    
+	<!--     menu菜单           -->
+    <string name="ago">很久以前</string>
+    <string name="yesterday">昨天</string>
+    <string name="today">今天</string>
+    <string name="tomorrow">明天</string>
+    <string name="future">以后</string>
+    <string name="more">更多.....</string>
 </resources>

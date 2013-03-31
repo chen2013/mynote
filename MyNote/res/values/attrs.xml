@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<!-- 自定义属性集 -->
+	<declare-styleable name="FlyInMenu">
+	    <attr name="animationDuration" format="integer" />
+	    <attr name="menu" format="reference"/>
+	    <attr name="content" format="reference"/>
+	</declare-styleable>
+    
+</resources>

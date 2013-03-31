@@ -24,14 +24,18 @@
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    > 
 	    </activity>
-	    <activity android:name="edu.sdust.mynote_menu.AboutUsActivity"
+	    <activity android:name="edu.sdust.mynote.menu.AboutUsActivity"
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    > 
 	    </activity>
-	    <activity android:name="edu.sdust.mynote_menu.FeedbackActivity"
+	    <activity android:name="edu.sdust.mynote.menu.FeedbackActivity"
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    > 
+	    </activity>
+	    <activity android:name="RegisterActivity"
+	    		  android:theme="@android:style/Theme.NoTitleBar"
+	    >
 	    </activity>
 </application> 
-    <uses-sdk android:minSdkVersion="3" /> 
+    <uses-sdk android:minSdkVersion="3" />  
 </manifest>

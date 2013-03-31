@@ -6,4 +6,26 @@
         <item name="android:paddingLeft">28.0px</item>
         <item name="android:button">@drawable/mynote_btn_check</item>
     </style>
+    
+    
+        <!-- 应用的主题 -->
+    <!-- 应用背景白色，无标题栏 -->
+    <style name="NotitleTheme" parent="@android:style/Theme.Light.NoTitleBar"></style>
+    <!-- 应用统一的风格 -->
+    <style name="MTheme.Basic" parent="@android:style/Theme.Light">
+        <item name="android:windowTitleBackgroundStyle">@style/WindowTitleBackground</item>
+        <item name="android:windowTitleSize">40dp</item>
+        <item name="android:listViewStyle">@style/MListView</item>
+    </style>
+    <!-- 背景 -->
+    <style name="WindowTitleBackground">
+        <item name="android:background">@drawable/title_bg</item>
+    </style>
+
+    <style name="MListView">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:divider">@null</item>
+        <item name="android:listSelector">@color/list_selector_background</item>
+        <item name="android:dividerHeight">0.0px</item>
+    </style>
 </resources>

@@ -1,6 +1,6 @@
 package edu.sdust.mynote;
-import edu.sdust.mynote_menu.AboutUsActivity;
-import edu.sdust.mynote_menu.FeedbackActivity;
+import edu.sdust.mynote.menu.AboutUsActivity;
+import edu.sdust.mynote.menu.FeedbackActivity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -41,6 +41,7 @@ public class LoginActivity extends Activity {
 			// TODO Auto-generated method stub
 			Intent mainIntent=new Intent(LoginActivity.this,MainActivity.class);
 			startActivity(mainIntent);
+			LoginActivity.this.finish();
 		}
     	
     });
@@ -80,12 +81,12 @@ public class LoginActivity extends Activity {
 			// 创建退出对话框
 			AlertDialog isExit = new AlertDialog.Builder(this).create();
 			// 设置对话框标题
-			isExit.setTitle("系统提示");
+			isExit.setTitle("系统提示！！");
 			// 设置对话框消息
-			isExit.setMessage("确定要退出吗");
+			isExit.setMessage("确定要退出登陆吗？");
 			// 添加选择按钮并注册监听
-			isExit.setButton("确定", listener);
-			isExit.setButton2("取消", listener);
+			isExit.setButton("当然", listener);
+			isExit.setButton2("才不", listener);
 			// 显示对话框
 			isExit.show();
 
