@@ -32,13 +32,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int button_selected=0x7f040004;
         public static final int button_unselected=0x7f040003;
         public static final int chat_title_name=0x7f040006;
-        public static final int dark_grey=0x7f04000f;
+        public static final int dark_grey=0x7f04000e;
         public static final int focus_text=0x7f04000b;
         public static final int info_panel_bg=0x7f040005;
-        public static final int list_selector_background=0x7f040011;
-        public static final int mynote_checkbox_text_color=0x7f04000e;
-        public static final int qq_checkbox_text_color=0x7f040012;
-        public static final int red=0x7f040010;
+        public static final int list_selector_background=0x7f040010;
+        public static final int mynote_checkbox_text_color=0x7f040011;
+        public static final int red=0x7f04000f;
         public static final int title_bg=0x7f040002;
         public static final int traffic_bg=0x7f040007;
         public static final int traffic_data=0x7f040009;
@@ -156,6 +155,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class id {
         public static final int LinearLayout01=0x7f08000a;
+        public static final int RelativeLayout=0x7f080017;
         public static final int RelativeLayout01=0x7f080015;
         public static final int RelativeLayout02=0x7f08000b;
         public static final int TextView01=0x7f08000e;
@@ -171,7 +171,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ivIcon=0x7f080020;
         public static final int ivSelected=0x7f08001f;
         public static final int leftPanel2=0x7f080018;
-        public static final int linearLayout1=0x7f080017;
         public static final int list=0x7f08001c;
         public static final int loginRoot=0x7f080009;
         public static final int login_btn_login=0x7f080012;
@@ -214,7 +213,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int aboutUsLabel=0x7f06000b;
         /**      menu菜单           
          */
-        public static final int ago=0x7f060016;
+        public static final int ago=0x7f060017;
         public static final int app_name=0x7f060001;
         public static final int back=0x7f06000c;
         public static final int commit=0x7f06000f;
@@ -223,12 +222,12 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int feedbackcontent=0x7f060010;
         public static final int feedbackthank=0x7f060011;
         public static final int find_pwd_back=0x7f060007;
-        public static final int future=0x7f06001a;
+        public static final int future=0x7f06001b;
         public static final int hello=0x7f060000;
         public static final int login=0x7f060009;
         public static final int main_tilte=0x7f060012;
-        public static final int menu_settings=0x7f060014;
-        public static final int more=0x7f06001b;
+        public static final int menu_settings=0x7f060015;
+        public static final int more=0x7f06001c;
         public static final int opt_remember=0x7f060006;
         public static final int register_new_acc=0x7f060008;
         public static final int registercommit=0x7f060013;
@@ -237,10 +236,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int strInputPwdHint=0x7f060003;
         public static final int strPswInputLabel=0x7f060005;
         public static final int title=0x7f06000e;
-        public static final int title_activity_main=0x7f060015;
-        public static final int today=0x7f060018;
-        public static final int tomorrow=0x7f060019;
-        public static final int yesterday=0x7f060017;
+        public static final int title_activity_main=0x7f060016;
+        public static final int today=0x7f060019;
+        public static final int tomorrow=0x7f06001a;
+        public static final int usernamelabel=0x7f060014;
+        public static final int yesterday=0x7f060018;
     }
     public static final class style {
         public static final int MListView=0x7f070004;

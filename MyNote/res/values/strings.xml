@@ -2,8 +2,8 @@
 <resources>
     <string name="hello">Hello World, Date!</string>
     <string name="app_name">Test Login</string>
-    <string name="strInputAccHint">请输入帐号</string>
-    <string name="strInputPwdHint">*****</string>
+    <string name="strInputAccHint">请输入邮箱名</string>
+    <string name="strInputPwdHint"></string>
     <string name="strAccInputLabel">帐号</string>
     <string name="strPswInputLabel">密码</string>
     <string name="opt_remember">记住密码</string>
@@ -20,6 +20,7 @@
     <string name="feedbackthank">感谢对我们软件的支持，您的建议我们会及时采纳~~~~</string>
     <string name="main_tilte">mynote</string>
     <string name="registercommit">注册</string>
+    <string name="usernamelabel">用户登陆</string>
     
     
     

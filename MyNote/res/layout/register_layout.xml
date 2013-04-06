@@ -108,7 +108,6 @@
                     android:layout_height="wrap_content"                
                     android:hint="您的用户名"                
                     android:maxLines="1"
-                    android:maxLength="10"
                     android:editable="true"
       				android:background="@android:color/white"
       				android:layout_weight="1.0"/>
@@ -140,7 +139,7 @@
                     android:layout_height="wrap_content"                
                     android:hint="您要设置的密码"                
                     android:maxLines="1"
-                    android:maxLength="10"
+                    android:maxLength="16"
                     android:editable="true"
       				android:background="@android:color/white"
       				android:layout_weight="1.0"/>
@@ -169,7 +168,7 @@
                     android:layout_height="wrap_content"                
                     android:hint="再次输入密码"                
                     android:maxLines="1"
-                    android:maxLength="10"
+                    android:maxLength="16"
                     android:editable="true"
       				android:background="@android:color/white"
       				android:layout_weight="1.0"/>

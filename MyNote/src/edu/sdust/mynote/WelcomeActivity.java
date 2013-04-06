@@ -3,7 +3,6 @@ package edu.sdust.mynote;
 
 import edu.sdust.mynote.R;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,6 +24,7 @@ public class WelcomeActivity extends Activity {
              Boolean user_first = firstStart.getBoolean("FIRST",true);        
         	 if (user_first){
         		 firstStart.edit().putBoolean("FIRST", false).commit();  
+        		 
         		 Intent guideIntent = new Intent(WelcomeActivity.this,GuideActivity.class); 
                  WelcomeActivity.this.startActivity(guideIntent); 
                  WelcomeActivity.this.finish(); 

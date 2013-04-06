@@ -92,8 +92,9 @@ public class GuideActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent openIntent=new Intent(GuideActivity.this,LoginActivity.class);
+				Intent openIntent=new Intent(GuideActivity.this,MainActivity.class);
 				startActivity(openIntent);
+				GuideActivity.this.finish();
 			}
 			});
 	}

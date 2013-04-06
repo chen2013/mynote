@@ -13,7 +13,7 @@ package edu.sdust.mynote.menu;
 
  * @Version 
  */
-import java.util.logging.Logger;
+
 
 import edu.sdust.mynote.R;
 import edu.sdust.mynote.adapter.MenuListAdapter;
@@ -28,7 +28,6 @@ import android.view.VelocityTracker;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 
 public class FlyInMenu extends FrameLayout {
@@ -139,24 +138,6 @@ public class FlyInMenu extends FrameLayout {
 		
 	}
 
-	@Override
-	public boolean onInterceptTouchEvent(MotionEvent ev) {
-		int action = ev.getAction();
-		switch (action) {
-		case MotionEvent.ACTION_DOWN:
-			Log.d(VIEW_LOG_TAG, "viewgroup intercept down");
-			break;
-		case MotionEvent.ACTION_MOVE:
-			Log.d(VIEW_LOG_TAG, "viewgroup intercept move");
-			break;
-		case MotionEvent.ACTION_UP:
-			Log.d(VIEW_LOG_TAG, "viewgroup intercept up");
-			break;
-		}
-
-		return false;
-	}
-	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
