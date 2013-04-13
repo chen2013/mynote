@@ -362,7 +362,7 @@ public class FlyInMenu extends FrameLayout {
 	private ListView mListView;
 	
 	private void initView(){
-		mListView = (ListView) findViewById(R.id.list);
+		mListView = (ListView) findViewById(R.id.menu_list);
 		menuListAdapter = new MenuListAdapter(myContext);
 		mListView.setAdapter(menuListAdapter);
 		menuListAdapter.notifyDataSetChanged();

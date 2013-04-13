@@ -1,6 +1,7 @@
 package edu.sdust.mynote;
 
 import edu.sdust.mynote.R;
+import edu.sdust.mynote.adapter.MenuListAdapter;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,68 +13,34 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
     /** Called when the activity is first created. */
-    @Override
+	
+    @Override 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+		// TODO Auto-generated method stub
         setContentView(R.layout.main);
-        
-        TextView loginBtn=(TextView)this.findViewById(R.id.loginlabel);
-        
-        SharedPreferences preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-        String read_username = preferences.getString("username", "");
-        String read_password = preferences.getString("password", "");
-        if(read_username != "" && read_password != ""){
-        	loginBtn.setText(read_username);
-        }
-        else{
-        	loginBtn.setText("用户登陆");
-        }
-        
-        loginBtn.setOnClickListener(new OnClickListener(){
-        	
-        	@Override
-        	public void onClick(View v){
-        		Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
-        		startActivity(loginIntent);
-        	}
-        });
+        mainFunction();
              
     }//end onCreate
     
-    
-    
 
-    //返回这个Activity时自动执行
+
+	//返回这个Activity时自动执行
 	@Override
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();      
         
-		setContentView(R.layout.main);
-        TextView loginBtn=(TextView)this.findViewById(R.id.loginlabel);
-        
-        SharedPreferences preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-        String read_username = preferences.getString("username", "");
-        String read_password = preferences.getString("password", "");
-        if(read_username != "" && read_password != ""){
-        	loginBtn.setText(read_username);
-        }
-        else{
-        	loginBtn.setText("用户登陆");
-        }
-        
-        loginBtn.setOnClickListener(new OnClickListener(){
-        	
-        	@Override
-        	public void onClick(View v){
-        		Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
-        		startActivityForResult(loginIntent,0);
-        	}
-        });
+		// TODO Auto-generated method stub
+        setContentView(R.layout.main);
+		mainFunction();
 	}
 
 
@@ -137,6 +104,49 @@ public class MainActivity extends Activity {
 			}
 		}
 	};	
+	
+	
+	//为了代码复用，onCreate and onResume同样适用
+    private void mainFunction() {
+        
+    	
+    	MenuListAdapter menuListAdapter=new MenuListAdapter(MainActivity.this);
+    	
+        TextView loginBtn=(TextView)this.findViewById(R.id.loginlabel);
+        
+        SharedPreferences preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+        String read_username = preferences.getString("username", "");
+        String read_password = preferences.getString("password", "");
+        if(read_username != "" && read_password != ""){
+        	loginBtn.setText(read_username);
+        }
+        else{
+        	loginBtn.setText("用户登陆");
+        }
+        
+        loginBtn.setOnClickListener(new OnClickListener(){
+        	
+        	@Override
+        	public void onClick(View v){
+        		Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
+        		startActivity(loginIntent);
+        	}
+        });
+        
+        ImageView add_list_btn=(ImageView)findViewById(R.id.add_list_btn);
+        add_list_btn.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				Intent add_list_intent=new Intent(MainActivity.this,AddNewListActivity.class);
+				startActivity(add_list_intent);
+			}
+        	
+        });
+        
+	}
 
     
 }//end Activity

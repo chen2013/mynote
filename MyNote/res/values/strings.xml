@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Date!</string>
-    <string name="app_name">Test Login</string>
+    <string name="hello">welcome to my app</string>
+    <string name="app_name">mynote</string>
     <string name="strInputAccHint">请输入邮箱名</string>
     <string name="strInputPwdHint"></string>
     <string name="strAccInputLabel">帐号</string>
@@ -22,6 +22,9 @@
     <string name="registercommit">注册</string>
     <string name="usernamelabel">用户登陆</string>
     
+    <string name="list_name">列表名称</string>
+    <string name="add_list_label">添加列表</string>
+    <string name="add_list_warn">创建列表的长度不超过10个汉字</string>
     
     
     
