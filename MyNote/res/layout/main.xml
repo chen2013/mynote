@@ -1,127 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:flyinmenu="http://schemas.android.com/apk/res/edu.sdust.mynote"
-    android:id="@+id/RelativeLayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
 
-    <edu.sdust.mynote.menu.FlyInMenu
-        android:id="@+id/leftPanel2"
+    <LinearLayout
+        android:id="@+id/layout_left"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_marginRight="50dp"
         android:background="@drawable/navigation_list_background"
-        flyinmenu:content="@+id/rightcontent"
-        flyinmenu:menu="@+id/menu" >
+        android:orientation="vertical" >
 
-        <LinearLayout
-            android:id="@+id/menu"
+        <!-- <AbsoluteLayout -->
+        <!-- android:layout_width="fill_parent" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:background="@color/grey21" -->
+        <!-- android:padding="10dp" > -->
+
+
+        <!-- <TextView -->
+        <!-- android:layout_width="wrap_content" -->
+        <!-- android:layout_height="wrap_content" -->
+        <!-- android:text="设置" -->
+        <!-- android:textColor="@android:color/background_light" -->
+        <!-- android:textSize="20sp" /> -->
+        <!-- </AbsoluteLayout> -->
+
+        <RelativeLayout
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="47dp"
-                android:background="@drawable/navigation_top_bar_background" >
-				<ScrollView 
+            android:layout_height="50dp"
+            android:background="@drawable/navigation_top_bar_background" >
+			<ScrollView 
 				    android:layout_width="150dip" 
-				    android:layout_height="50dip" 
+				    android:layout_height="50dp" 
 					android:layout_weight="1.0"
 					android:orientation="horizontal">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_alignParentLeft="true"
-                    android:gravity="center|left"
-                    android:padding="10dp"
-                    android:text="@string/usernamelabel"
-                    android:textColor="@android:color/darker_gray"
-                    android:textSize="18sp"
-                    android:clickable="true"
-                    android:id="@+id/loginlabel"/>
-				</ScrollView>
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentRight="true"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal" >
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="50dp"
+	                android:layout_alignParentLeft="true"
+	                android:gravity="center|left"
+	                android:padding="10dp"
+	                android:text="用户登陆"
+	                android:clickable="true"
+	                android:id="@+id/loginlabel"
+	                android:textColor="@android:color/darker_gray"
+	                android:textSize="18sp" />
+	        </ScrollView>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1.0"
-                        android:id="@+id/add_list_btn" 
-                        android:clickable="true"
-                        android:background="@drawable/navigation_top_bar_add"/>
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/navigation_top_bar_edit" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/setting_btn"
-                        android:clickable="true"
-                        android:background="@drawable/navigation_top_bar_setting" />
-                </LinearLayout>
-            </RelativeLayout>
-
-            <ListView
-                android:id="@+id/menu_list"
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:divider="#ff555555"
-                android:background="@color/transparent"
-                android:dividerHeight="1.0px"
-                 >
-            </ListView>
-        </LinearLayout>
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
 
-        <LinearLayout
-            android:id="@+id/rightcontent"
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0"
+                    android:id="@+id/add_list_btn"
+                    android:clickable="true"
+                    android:background="@drawable/navigation_top_bar_add" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/navigation_top_bar_edit" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/navigation_top_bar_setting" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <ListView
+            android:id="@+id/lv_set"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="@android:color/white"
-            android:orientation="vertical" >
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:divider="#ff555555"
+            android:dividerHeight="1.0px" >
+        </ListView>
+    </LinearLayout>
 
-		        <RelativeLayout
-			    android:orientation="horizontal"
-			    android:layout_width="fill_parent"
-			    android:layout_height="50dip"
-			    android:background="@drawable/title_bar_bg">
-			    <Button
-				    android:id="@+id/main_option_btn"
-					android:layout_width="40dip"
-					android:layout_height="40dip"
-					android:background="@drawable/option"
-					android:layout_marginLeft="5dip"
-					android:layout_centerVertical="true">
-				</Button>
-			    <TextView
-				    android:layout_width="wrap_content" 
-				    android:layout_height="wrap_content" 
-				    android:text="@string/main_tilte"
-				    android:layout_centerInParent="true"
-				    android:textColor="#33333333"
-				    android:textSize="18dip"
-				    android:layout_centerVertical="true"
-				    />
-				<Button
-				    android:id="@+id/main_setting_btn"
-					android:layout_width="23dip"
-					android:layout_height="23dip"
-					android:background="@drawable/setting_bg"
-					android:layout_centerVertical="true"
-					android:layout_marginRight="10dip"
-					android:layout_alignParentRight="true">
-			    </Button>
-		    </RelativeLayout>
-        </LinearLayout>
-    </edu.sdust.mynote.menu.FlyInMenu>
+    <LinearLayout
+        android:id="@+id/layout_right"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nav_bg" >
+
+            <ImageView
+                android:id="@+id/iv_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/nav_setting" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="mynote"
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+        <edu.sdust.mynote.MyLinearLayout
+            android:id="@+id/mylaout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@drawable/splash_bg"
+            android:layout_weight="1"
+             >
+
+<!--             <ListView -->
+<!--                 android:id="@+id/lv_setContent" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_height="fill_parent" -->
+<!--                 android:background="@color/transparent" -->
+<!--                 android:divider="#ff555555" -->
+<!--                 android:dividerHeight="1.0px" > -->
+<!--             </ListView> -->
+        </edu.sdust.mynote.MyLinearLayout>
+    </LinearLayout>
 
 </RelativeLayout>

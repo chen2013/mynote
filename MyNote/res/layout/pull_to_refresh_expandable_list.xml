@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+    <!-- The PullToRefreshExpandableListView replaces a standard ExpandableListView widget. -->
+
+    <com.pull.lib.PullToRefreshExpandableListView
+        xmlns:ptr="http://schemas.android.com/apk/res/edu.sdust.mynote.pull"
+        android:id="@+id/pull_refresh_expandable_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        ptr:adapterViewBackground="@color/transparent"
+        ptr:headerBackground="@color/transparent"
+        ptr:headerTextColor="@android:color/white"
+        ptr:mode="pullUpFromBottom" />
+
+</LinearLayout>

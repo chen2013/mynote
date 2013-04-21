@@ -2,7 +2,7 @@ package edu.sdust.mynote;
 
 import edu.sdust.mynote.menu.AboutUsActivity;
 import edu.sdust.mynote.menu.FeedbackActivity;
-import edu.sdust.mynote.R;
+import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.service.HttpPostRequest;
 import edu.sdust.mynote.service.HttpRequest;
 import android.app.Activity;

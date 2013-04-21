@@ -2,11 +2,9 @@ package edu.sdust.mynote;
 
 
 import java.util.Date;
-
-import edu.sdust.mynote.R;
-import edu.sdust.mynote.database.ListCount;
 import edu.sdust.mynote.database.Lists;
 import edu.sdust.mynote.function.DealWithDate;
+import edu.sdust.mynote.pull.R;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -37,13 +35,13 @@ public class WelcomeActivity extends Activity {
         		 
         		 DealWithDate dealWithDate =new DealWithDate();
         		 
-        		 Lists listsDB=new Lists(WelcomeActivity.this);
+        		 Lists listsDB=new Lists(MyApplication.getInstance());
         		 listsDB.open();
         		 
         		 long id;
-        		 id = listsDB.insertItem("before", dealWithDate.dateToStrLong(new Date()),0, "");
-        		 id = listsDB.insertItem("today", dealWithDate.dateToStrLong(new Date()),0, "");
-        		 id = listsDB.insertItem("after", dealWithDate.dateToStrLong(new Date()),0, "");
+        		 id = listsDB.insertItem("listview", dealWithDate.dateToStrLong(new Date()),0, "");
+        		 id = listsDB.insertItem("gridview", dealWithDate.dateToStrLong(new Date()),0, "");
+        		 id = listsDB.insertItem("expandview", dealWithDate.dateToStrLong(new Date()),0, "");
  				 
         		 listsDB.close();
         		 

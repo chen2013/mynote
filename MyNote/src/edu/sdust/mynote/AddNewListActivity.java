@@ -4,6 +4,7 @@ import java.util.Date;
 import edu.sdust.mynote.database.ListCount;
 import edu.sdust.mynote.database.Lists;
 import edu.sdust.mynote.function.DealWithDate;
+import edu.sdust.mynote.pull.R;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -56,7 +57,7 @@ public class AddNewListActivity extends Activity {
 	       		 
 	       		 DealWithDate dealWithDate =new DealWithDate();
 	       		 
-	       		 Lists listsDB=new Lists(AddNewListActivity.this);
+	       		 Lists listsDB=new Lists(MyApplication.getInstance());
 	       		 listsDB.open();
 	       		 Log.v("add_list_label1","open_success");
 	       		 

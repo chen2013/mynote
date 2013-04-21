@@ -2,9 +2,8 @@ package edu.sdust.mynote;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import edu.sdust.mynote.R;
 import edu.sdust.mynote.adapter.GuidePagerAdapter;
+import edu.sdust.mynote.pull.R;
 
 import android.app.Activity;
 import android.content.Intent;

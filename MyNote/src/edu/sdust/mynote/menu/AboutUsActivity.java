@@ -1,6 +1,6 @@
 package edu.sdust.mynote.menu;
 
-import edu.sdust.mynote.R;
+import edu.sdust.mynote.pull.R;
 import android.app.Activity;
 import android.os.Bundle;
 

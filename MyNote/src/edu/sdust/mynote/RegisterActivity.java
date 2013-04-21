@@ -1,5 +1,6 @@
 package edu.sdust.mynote;
 
+import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.service.HttpPostRequest;
 import android.app.Activity;
 import android.content.Context;
