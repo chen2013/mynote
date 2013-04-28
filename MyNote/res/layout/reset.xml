@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+    <TextView 
+        android:text="修改备忘"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
+    <EditText 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title"
+        />
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id = "@+id/content"
+        />
+    <RadioGroup 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView android:text = "重要"/>
+        <RadioButton 
+            android:id="@+id/radio0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+        <TextView android:text = "普通"/>
+        <RadioButton 
+            android:id="@+id/radio1"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            />
+        <TextView android:text="暂停"/>
+
+        <RadioButton
+            android:id="@+id/radio2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:capitalize="none" />
+    </RadioGroup>
+    <LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+    <Button 
+        android:text = "删除"
+        android:minEms="5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/del"
+        />
+    <Button 
+        android:text="更改时间"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id = "@+id/setTimeBtn"
+        />
+    <Button
+        android:text = "更改日期"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/setDataBtn"
+        />
+    </LinearLayout>
+</LinearLayout>

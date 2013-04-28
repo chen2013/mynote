@@ -5,6 +5,7 @@ import java.util.Date;
 import edu.sdust.mynote.database.Lists;
 import edu.sdust.mynote.function.DealWithDate;
 import edu.sdust.mynote.pull.R;
+import edu.sdust.mynote.service.HttpPostRequest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,11 +17,13 @@ import android.os.Handler;
 public class WelcomeActivity extends Activity {    
 
     private final int SPLASH_DISPLAY_LENGHT = 3000; //延迟三秒 
+    private HttpPostRequest request = new HttpPostRequest();
 
     @Override 
     public void onCreate(Bundle savedInstanceState) { 
         super.onCreate(savedInstanceState); 
         setContentView(R.layout.welcome_layout); 
+        
         new Handler().postDelayed(new Runnable(){ 
 
          @Override 
@@ -30,34 +33,28 @@ public class WelcomeActivity extends Activity {
         	 if (user_first){
         		 firstStart.edit().putBoolean("FIRST", false).commit();  
         		 
-        		 
-        		 //对数据库进行初始化
-        		 
-        		 DealWithDate dealWithDate =new DealWithDate();
-        		 
-        		 Lists listsDB=new Lists(MyApplication.getInstance());
-        		 listsDB.open();
-        		 
-        		 long id;
-        		 id = listsDB.insertItem("listview", dealWithDate.dateToStrLong(new Date()),0, "");
-        		 id = listsDB.insertItem("gridview", dealWithDate.dateToStrLong(new Date()),0, "");
-        		 id = listsDB.insertItem("expandview", dealWithDate.dateToStrLong(new Date()),0, "");
- 				 
-        		 listsDB.close();
-        		 
-                 SharedPreferences preferences= MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE);
-                 Editor editor = preferences.edit();
-                 editor.putInt("listCount", 3);
-                 editor.commit();
+
                  
         		 Intent guideIntent = new Intent(WelcomeActivity.this,GuideActivity.class); 
                  WelcomeActivity.this.startActivity(guideIntent); 
                  WelcomeActivity.this.finish(); 
         	 }
         	 else{
-        		 Intent mainIntent = new Intent(WelcomeActivity.this,MainActivity.class); 
-                 WelcomeActivity.this.startActivity(mainIntent); 
-                 WelcomeActivity.this.finish();
+        		    SharedPreferences preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+        	        String read_username = preferences.getString("username", "");
+        	        String read_password = preferences.getString("password", "");
+        	        if(read_username != "" && read_password != ""){
+        	        	request.sendPostForLogin(read_username, read_password);
+        	        	request.getAllList();
+        	        	Intent mainIntent = new Intent(WelcomeActivity.this,MainActivity.class); 
+                        WelcomeActivity.this.startActivity(mainIntent); 
+                        WelcomeActivity.this.finish();
+        	        }
+        	        else{
+               		 Intent loginIntent = new Intent(WelcomeActivity.this,LoginActivity.class); 
+                     WelcomeActivity.this.startActivity(loginIntent); 
+                     WelcomeActivity.this.finish();
+        	        }
         	 }
          } 
         }, SPLASH_DISPLAY_LENGHT); 

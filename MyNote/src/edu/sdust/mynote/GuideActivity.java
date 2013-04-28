@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import edu.sdust.mynote.adapter.GuidePagerAdapter;
 import edu.sdust.mynote.pull.R;
+import edu.sdust.mynote.service.HttpPostRequest;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -36,6 +39,8 @@ public class GuideActivity extends Activity {
 	private ImageView curDot;
 	private int offset;// 位移量
 	private int curPos = 0;// 记录当前的位置
+	
+	HttpPostRequest request=new HttpPostRequest();
 
 	/** Called when the activity is first created. */
 	@Override
@@ -91,9 +96,21 @@ public class GuideActivity extends Activity {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent openIntent=new Intent(GuideActivity.this,MainActivity.class);
-				startActivity(openIntent);
-				GuideActivity.this.finish();
+				SharedPreferences preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+    	        String read_username = preferences.getString("username", "");
+    	        String read_password = preferences.getString("password", "");
+    	        if(read_username != "" && read_password != ""){
+    	        	request.sendPostForLogin(read_username, read_password);
+    	        	request.getAllList();
+    	        	Intent mainIntent = new Intent(GuideActivity.this,MainActivity.class); 
+                    startActivity(mainIntent); 
+                    finish();
+    	        }
+    	        else{
+           		 Intent loginIntent = new Intent(GuideActivity.this,LoginActivity.class); 
+                 startActivity(loginIntent); 
+                 finish();
+    	        }
 			}
 			});
 	}

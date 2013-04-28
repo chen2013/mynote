@@ -45,6 +45,9 @@ public class LoginActivity extends Activity{
 	boolean result;	
 	boolean netcheck;
 	private ProgressDialog proDialog;
+	HttpPostRequest request = new HttpPostRequest();
+	
+	
 	Handler checkHandler = new Handler() {
 		public void handleMessage(Message msg) {
 			result = msg.getData().getBoolean("ischeckError");
@@ -55,6 +58,9 @@ public class LoginActivity extends Activity{
 				Toast.makeText(LoginActivity.this, "验证失败，请检查您的用户名和密码！",Toast.LENGTH_SHORT).show();
 			}else{
 				Toast.makeText(LoginActivity.this, "绑定成功!",Toast.LENGTH_LONG).show();
+				request.getAllList();
+				Intent mainIntent= new Intent(LoginActivity.this,MainActivity.class);
+				startActivity(mainIntent);
 				LoginActivity.this.finish();
 			}
 		}
@@ -212,7 +218,7 @@ public class LoginActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onResume();
 		
-setContentView(R.layout.login_layout);
+        setContentView(R.layout.login_layout);
        
         
         //点击界面下方选项的按钮事件

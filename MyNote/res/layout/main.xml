@@ -83,7 +83,8 @@
             android:layout_weight="1"
             android:background="@color/transparent"
             android:divider="#ff555555"
-            android:dividerHeight="1.0px" >
+            android:dividerHeight="1.0px" 
+            android:descendantFocusability="blocksDescendants">
         </ListView>
     </LinearLayout>
 
@@ -112,7 +113,16 @@
                 android:layout_centerInParent="true"
                 android:text="mynote"
                 android:textColor="@android:color/background_light"
-                android:textSize="20sp" />
+                android:textSize="20sp" 
+                android:id="@+id/AppLabel"/>
+            <ImageView
+                android:id="@+id/add_event_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/navigation_top_bar_add" />
         </RelativeLayout>
 
         <edu.sdust.mynote.MyLinearLayout

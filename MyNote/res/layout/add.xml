@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:background="@drawable/splash_bg">
+	<RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/nav_bg" >
+
+            <Button
+		    android:id="@+id/add_event_back_btn"
+			android:layout_width="40dip"
+			android:layout_height="24dip"
+			android:background="@drawable/back_bg"
+			android:layout_marginLeft="5dip"
+			android:layout_centerVertical="true"
+			android:text="@string/back">
+	    </Button>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="mynote"
+                android:textColor="@android:color/background_light"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="内容" />
+
+    <EditText
+        android:id="@+id/content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minEms="20"
+        android:minLines="3" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:gravity="center"
+        >
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/radio0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="重要" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="普通" />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="暂停" />
+        </RadioGroup>
+        
+       </LinearLayout>
+       
+		<LinearLayout 
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+		    >
+       <TextView 
+           android:text = "是否开启提醒"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           />
+       <CheckBox
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:id="@+id/open"
+            />
+       </LinearLayout>
+
+		<LinearLayout
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:gravity="center"
+		    >
+
+		    <Button
+		        android:id="@+id/setBtn"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:enabled="false"
+		        android:text="设置时间" />
+		    <Button 
+		        android:id = "@+id/setDataBtn"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:enabled="false"
+		        android:text = "设置日期"
+		        />
+		</LinearLayout>
+
+		<LinearLayout 
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           >
+           <Button 
+               android:text="保存"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:minWidth="160dp"
+               android:id = "@+id/save"
+               />
+           <Button
+               android:text="重置"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:minWidth="160dp"
+               android:id="@+id/reset"
+               />
+       </LinearLayout>
+
+</LinearLayout>

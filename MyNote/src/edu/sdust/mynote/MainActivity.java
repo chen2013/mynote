@@ -6,9 +6,8 @@ import edu.sdust.mynote.MyApplication;
 import edu.sdust.mynote.MyLinearLayout.OnScrollListener;
 import edu.sdust.mynote.database.Lists;
 import edu.sdust.mynote.pull.R;
-import edu.sdust.mynote.pull.PullToRefreshExpandableListActivity;
-import edu.sdust.mynote.pull.PullToRefreshGridActivity;
-import edu.sdust.mynote.pull.PullToRefreshListActivity;
+import edu.sdust.mynote.service.HttpPostRequest;
+
 import android.app.Activity;
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
@@ -16,6 +15,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -69,6 +69,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	private LinearLayout layout_right;
 	private ImageView iv_set;
 	private ListView lv_set;
+	private TextView app_label;
 
 	private MyLinearLayout rightContent;
 	
@@ -87,7 +88,10 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 
 	private String TAG = "edu.sdust.mynote";
 
-	Intent [] intentView ;
+	Intent intentView ;
+	
+	HttpPostRequest request = new HttpPostRequest();
+	
 	
 	/***
 	 * 初始化view
@@ -100,7 +104,6 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		listCnt=preferences.getInt("listCount", 3);
 		
 		title=new String[listCnt];		
-		Log.v("listCount_menu",""+listCnt+",,"+title.length);
 		
 		
 		
@@ -115,18 +118,19 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 				title[i]=c.getString(1);
 			}
 		}
+		c.close();
+		listsDB.close();
 		
-		intentView  = new Intent []{
-				new Intent(MainActivity.this,PullToRefreshListActivity.class),
-				new Intent(MainActivity.this,PullToRefreshGridActivity.class),
-				new Intent(MainActivity.this,PullToRefreshExpandableListActivity.class),
-				};
+		intentView  = new Intent(MainActivity.this,StoreUpActivity.class);
 		
 		layout_left = (LinearLayout) findViewById(R.id.layout_left);
 		layout_right = (LinearLayout) findViewById(R.id.layout_right);
+		
 		iv_set = (ImageView) findViewById(R.id.iv_set);
 		lv_set = (ListView) findViewById(R.id.lv_set);
-		lv_set.setAdapter(new ArrayAdapter<String>(this, R.layout.item,
+		app_label=(TextView)findViewById(R.id.AppLabel);
+		
+		lv_set.setAdapter(new ArrayAdapter<String>(this, R.layout.item_old,
 				R.id.tv_item, title));
 		lv_set.setOnItemClickListener(new OnItemClickListener() {
 
@@ -134,26 +138,23 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				rightContent.removeAllViews();
-				switch (position) {
-				case 0:
-					
-					listView = getLocalActivityManager().startActivity("listview", intentView[0]).getDecorView();
-					
-					break;
-				case 1:
-					
-					listView = getLocalActivityManager().startActivity("listview", intentView[1]).getDecorView();
-					
-					break;
-				case 2:
-					
-					listView = getLocalActivityManager().startActivity("listview", intentView[2]).getDecorView();
-					
-					break;
+				
+//				intentView.putExtra("position", position);
+//				listView = getLocalActivityManager().startActivity("listView", intentView).getDecorView();
+//				
+				
+				SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE);
+				Editor editor = prefer.edit();
 
-				default:
-					break;
-				}
+				editor.putInt("position", position);
+				editor.commit();
+				
+				Log.v("position click",""+ position);
+				intentView.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);//这里保证StoreUpActivity是单任务模式
+				
+				listView = getLocalActivityManager().startActivity("listview", intentView).getDecorView();
+				
+				
 				rightContent.addView(listView, 0);
 				
 				rightContent.bringChildToFront(listView);
@@ -164,7 +165,12 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 
 		rightContent = (MyLinearLayout) findViewById(R.id.mylaout);
 		
-		listView = getLocalActivityManager().startActivity("listview", intentView[0]).getDecorView();
+		SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE);
+		Editor editor = prefer.edit();
+
+		editor.putInt("position", 0);
+		editor.commit();
+		listView = getLocalActivityManager().startActivity("listview", intentView).getDecorView();
 		
 		rightContent.removeAllViews();
 		
@@ -185,8 +191,9 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 				doCloseScroll(suduEnough);
 			}
 		});
-		layout_right.setOnTouchListener(this);
 		iv_set.setOnTouchListener(this);
+		layout_right.setOnTouchListener(this);
+		rightContent.setOnTouchListener(this);
 		mGestureDetector = new GestureDetector(this);
 		// 禁用长按监听
 		mGestureDetector.setIsLongpressEnabled(false);
@@ -507,66 +514,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	}
 	
 	
-	//为了代码复用，onCreate and onResume同样适用
-    private void mainFunction() { 
-        
-    	InitView();
-    	
-        TextView loginBtn=(TextView)this.findViewById(R.id.loginlabel);
-        
-        SharedPreferences preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-        String read_username = preferences.getString("username", "");
-        String read_password = preferences.getString("password", "");
-        if(read_username != "" && read_password != ""){
-        	loginBtn.setText(read_username);
-        }
-        else{
-        	loginBtn.setText("用户登陆");
-        }
-        
-        loginBtn.setOnClickListener(new OnClickListener(){
-        	
-        	@Override
-        	public void onClick(View v){
-        		Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
-        		startActivity(loginIntent);
-        	}
-        });
-        
-        ImageView add_list_btn=(ImageView)findViewById(R.id.add_list_btn);
-        add_list_btn.setOnClickListener(new OnClickListener(){
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				
-				Intent add_list_intent=new Intent(MainActivity.this,AddNewListActivity.class);
-				startActivity(add_list_intent);
-			}
-        	
-        }); 
-          
-    	/**监听对话框里面的button点击事件*/
-    	DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener()
-    	{
-    		public void onClick(DialogInterface dialog, int which)
-    		{
-    			switch (which)
-    			{
-    			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
-    				System.exit(0);
-    				break;
-    			case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
-    				break;
-    			default:
-    				break;
-    			}
-    		}
-    	};	
-	}
-    
-    
-    //监听程序里边的返回按键是否点击，随后要修改成后台运行，以完成提醒的的功能
+	//监听程序里边的返回按键是否点击，随后要修改成后台运行，以完成提醒的的功能
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{
@@ -611,7 +559,74 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 			}
 		}
 	};	
+	
+	
+	//为了代码复用，onCreate and onResume同样适用
+    private void mainFunction() { 
+        
+    	
+    	
+        TextView loginBtn=(TextView)this.findViewById(R.id.loginlabel);
 
+    	InitView();
+        
+        loginBtn.setOnClickListener(new OnClickListener(){
+        	
+        	@Override
+        	public void onClick(View v){
+        		Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
+        		startActivity(loginIntent);
+        	}
+        });
+        
+        
+        ImageView add_list_btn=(ImageView)findViewById(R.id.add_list_btn);
+        add_list_btn.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				Intent add_list_intent=new Intent(MainActivity.this,AddNewListActivity.class);
+				startActivity(add_list_intent);
+			}
+        	
+        }); 
+          
+    	/**监听对话框里面的button点击事件*/
+    	DialogInterface.OnClickListener listener = new DialogInterface.OnClickListener()
+    	{
+    		public void onClick(DialogInterface dialog, int which)
+    		{
+    			switch (which)
+    			{
+    			case AlertDialog.BUTTON_POSITIVE:// "确认"按钮退出程序
+    				System.exit(0);
+    				break;
+    			case AlertDialog.BUTTON_NEGATIVE:// "取消"第二个按钮取消对话框
+    				break;
+    			default:
+    				break;
+    			}
+    		}
+    	};
+    	
+    	
+    	//点击添加event事件
+    	ImageView add_event=(ImageView)findViewById(R.id.add_event_btn);
+    	add_event.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				
+				Intent addEventIntent =new Intent(MainActivity.this,AddNewEventActivity.class);
+				startActivity(addEventIntent);
+			}
+    		
+    	});
+    	
+	}
 	
 
 }
