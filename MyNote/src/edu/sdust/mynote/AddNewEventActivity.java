@@ -12,6 +12,7 @@ import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.Date;
 
 import edu.sdust.mynote.bean.Memo;
 import edu.sdust.mynote.database.DatabaseHelper;
+import edu.sdust.mynote.database.Lists;
 import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.receiver.AlarmReceiver;
 import edu.sdust.mynote.service.HttpPostRequest;
@@ -47,6 +49,7 @@ public class AddNewEventActivity extends Activity {
 	private Button setBtn,setDataBtn;
 	private AlarmManager alarmManager=null; 
 	private HttpPostRequest request=new HttpPostRequest();
+	private Lists list = new Lists(MyApplication.getInstance());
     
     final int DIALOG_TIME = 0;    //设置对话框id  
     final int DIALOG_DATA = 1;	//dialog/id
@@ -102,15 +105,19 @@ public class AddNewEventActivity extends Activity {
 				memo.setRepeat_type(0);
 				
 				//获得当前处在那个list中
-				SharedPreferences preference=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-				String list_id=preference.getString("newList", "0");
-				//String list_id=preference.getString("curList", "0");
+				SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+		        int position = prefer.getInt("position", 0);
+		         
+		         
+		        list.open();
+		        Cursor cursor=list.getItem(position+1);
+		        String curList = cursor.getString(0);
+		        cursor.close();
 				
+
+				request.addNewEvent(memo.getItem_content(), curList);
 				
-				request.addNewEvent(memo.getItem_content(), "D9E12762AC824E4BDC02C00212CC37E1");
-				//request.addNewEvent(memo.getItem_content(), list_id);
-				
-				String event_id=preference.getString("newEvent", "0");
+				String event_id=prefer.getString("newEvent", "0");
 				
 				memo.setItem_id(event_id);
 				
@@ -138,6 +145,7 @@ public class AddNewEventActivity extends Activity {
                 isSetData = isSetTime = false;
 				Log.v("tag", ""+System.currentTimeMillis());
 				Log.v("tag", ""+cal.getTimeInMillis());
+				finish();
 			}
 		});
     	reset.setOnClickListener(new View.OnClickListener() {

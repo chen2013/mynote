@@ -742,6 +742,14 @@ public class HttpPostRequest {
         String token_c=token.getString("token", "");
         
         int res = 20;
+        
+        db_memo.open();
+        db_memo.deleteAll("memo");
+        db_memo.close();
+        
+        db_memo01.open();
+        db_memo01.deleteAll("memo01");
+        db_memo01.close();
 
         /*
          * NameValuePair实现请求参数的封装
@@ -784,15 +792,7 @@ public class HttpPostRequest {
                 
                 JSONArray jsonArray = jsonObject.getJSONArray("events");
                 int iSize = jsonArray.length();
-
-                db_memo.open();
-                db_memo.deleteAll("memo");
-                db_memo.close();
-                
-                db_memo01.open();
-                db_memo01.deleteAll("memo01");
-                db_memo01.close();
-                
+              
                 db_memo.open();
                 db_memo01.open();
                 Log.v("iSize", ""+iSize);
@@ -824,12 +824,12 @@ public class HttpPostRequest {
                 		
                 		db_memo.insertData(memo);
                 		
-                		AlarmManager alarmManager = (AlarmManager)MyApplication.getInstance().getSystemService(Context.ALARM_SERVICE);//取得系统闹钟服务
-                		Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
-	       				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
-	       				intent.putExtra("item_id", memo.getItem_id());
-                        PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, 0);    //创建PendingIntent 
-                        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+//                		AlarmManager alarmManager = (AlarmManager)MyApplication.getInstance().getSystemService(Context.ALARM_SERVICE);//取得系统闹钟服务
+//                		Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
+//	       				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
+//	       				intent.putExtra("item_id", memo.getItem_id());
+//                        PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, 0);    //创建PendingIntent 
+//                        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
                 	}
                 	else{
                 		db_memo01.insertData(memo);

@@ -39,7 +39,7 @@ public class AddNewListActivity extends Activity {
 				 //获取文本内容
 				 EditText list_name=(EditText)findViewById(R.id.add_new_list_name);
 				 
-				 request.addNewList(list_name.toString());
+				 request.addNewList(list_name.getText().toString());
 
 				 //获取原本列表个数，加一后存储
 				 SharedPreferences preferences_r= MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);

@@ -54,6 +54,13 @@
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    >
 	    </activity>
+	    <activity android:name="edu.sdust.mynote.ShareListActivity"
+	    		  android:theme="@android:style/Theme.NoTitleBar"
+	    >
+	    </activity>
+	    
+	    
+	    
         <receiver android:name="edu.sdust.mynote.receiver.AlarmReceiver"></receiver>
 	    
 	    

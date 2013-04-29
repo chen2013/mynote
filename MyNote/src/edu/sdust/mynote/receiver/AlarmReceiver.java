@@ -27,7 +27,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 			databaseHelper.open();
 			//这里要在memo表中删除 
 			String event_id=intent.getStringExtra("event_id");
-			databaseHelper.deleteById(event_id);
+			databaseHelper.deleteById(event_id);///z这里的event-id有错误
 			Log.v("tag",intent.getLongExtra("id", 0)+"hh");
 			databaseHelper.close();
 			

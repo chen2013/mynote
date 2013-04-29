@@ -67,12 +67,14 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/navigation_top_bar_edit" />
+                    android:background="@drawable/share_list" 
+                    android:id="@+id/share_list"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/navigation_top_bar_setting" />
+                    android:background="@drawable/navigation_top_bar_setting" 
+                    android:id="@+id/main_setting"/>
             </LinearLayout>
         </RelativeLayout>
 
@@ -105,16 +107,17 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/nav_setting" />
+                android:layout_centerVertical="true"
+                android:src="@drawable/navigation_top_bar_edit" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="mynote"
+                android:text="finished"
                 android:textColor="@android:color/background_light"
                 android:textSize="20sp" 
-                android:id="@+id/AppLabel"/>
+                android:id="@+id/to_finish"/>
             <ImageView
                 android:id="@+id/add_event_btn"
                 android:layout_width="wrap_content"

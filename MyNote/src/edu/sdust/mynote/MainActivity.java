@@ -2,15 +2,21 @@ package edu.sdust.mynote;
 
 
 
+import java.util.List;
+
 import edu.sdust.mynote.MyApplication;
 import edu.sdust.mynote.MyLinearLayout.OnScrollListener;
+import edu.sdust.mynote.bean.Memo;
 import edu.sdust.mynote.database.Lists;
+import edu.sdust.mynote.menu.AboutUsActivity;
+import edu.sdust.mynote.menu.FeedbackActivity;
 import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.service.HttpPostRequest;
 
 import android.app.Activity;
 import android.app.ActivityGroup;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -24,6 +30,7 @@ import android.view.ContextMenu;
 import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
 import android.view.View;
@@ -38,9 +45,11 @@ import android.view.View.OnTouchListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -74,6 +83,8 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	private MyLinearLayout rightContent;
 	
 	private View listView ;
+	
+	private Builder builder;
 
 
 	/** 每次自动展开/收缩的范围 */
@@ -91,12 +102,14 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	Intent intentView ;
 	
 	HttpPostRequest request = new HttpPostRequest();
+	Lists list = new Lists(MyApplication.getInstance());
 	
 	
 	/***
 	 * 初始化view
 	 */
 	void InitView() {
+		
 		
 		
 		//获得列表个数
@@ -128,10 +141,11 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		
 		iv_set = (ImageView) findViewById(R.id.iv_set);
 		lv_set = (ListView) findViewById(R.id.lv_set);
-		app_label=(TextView)findViewById(R.id.AppLabel);
 		
 		lv_set.setAdapter(new ArrayAdapter<String>(this, R.layout.item_old,
 				R.id.tv_item, title));
+		
+		
 		lv_set.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -162,19 +176,20 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 				new AsynMove().execute(-SPEED);
 			}
 		});
+		
+		
+		//注：setOnCreateContextMenuListener是与下面onContextItemSelected配套使用的
+		lv_set.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
+		       public void onCreateContextMenu(ContextMenu menu, View v,
+		              ContextMenuInfo menuInfo) {
+		                  menu.add(0, 0, 0, "分享");
+		                  menu.add(0, 1, 0, "删除");
+		                  menu.add(0, 2, 0, "重命名");
+		              }
+		});
 
 		rightContent = (MyLinearLayout) findViewById(R.id.mylaout);
 		
-		SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE);
-		Editor editor = prefer.edit();
-
-		editor.putInt("position", 0);
-		editor.commit();
-		listView = getLocalActivityManager().startActivity("listview", intentView).getDecorView();
-		
-		rightContent.removeAllViews();
-		
-		rightContent.addView(listView, 0);
 
 		rightContent.setOnScrollListener(new OnScrollListener() {
 
@@ -193,7 +208,6 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		});
 		iv_set.setOnTouchListener(this);
 		layout_right.setOnTouchListener(this);
-		rightContent.setOnTouchListener(this);
 		mGestureDetector = new GestureDetector(this);
 		// 禁用长按监听
 		mGestureDetector.setIsLongpressEnabled(false);
@@ -233,7 +247,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.main);
 		
-
+	   	InitView();
 		mainFunction();
 
 	}
@@ -251,9 +265,20 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-
+		InitView();
 		mainFunction();
 		
+		
+//		intentView.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);//这里保证StoreUpActivity是单任务模式
+//		
+//		intentView = new Intent(MainActivity.this,StoreUpActivity.class);
+//		
+//		listView = getLocalActivityManager().startActivity("listview", intentView).getDecorView();
+//		
+//		rightContent.removeView(listView);
+//		rightContent.addView(listView, 0);
+//		
+//		rightContent.bringChildToFront(listView);
 	}
 
 	@Override
@@ -514,6 +539,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	}
 	
 	
+	
 	//监听程序里边的返回按键是否点击，随后要修改成后台运行，以完成提醒的的功能
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
@@ -560,24 +586,116 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		}
 	};	
 	
+		        // 长按菜单响应函数
+		        public boolean onContextItemSelected(MenuItem item) {
+		 
+		                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+		                                .getMenuInfo();
+		                final int pos = (int) info.position;// 这里的info.id对应的就是数据库中rowId的值
+		                
+		                Log.v("chang an shijian ", ""+pos+1);
+		 
+		                list.open();
+        		        final Cursor cursor=list.getItem(pos+1);
+        		        cursor.moveToFirst();
+        		        final String curList = cursor.getString(0);
+        		        final String create_time=cursor.getString(2);
+        		        final int total = cursor.getInt(3);
+        		        final String _class = cursor.getString(4);
+        		        	               		        
+		                switch (item.getItemId()) {
+		                case 0:
+		                        // 分享操作
+			                	Intent shareListIntent = new Intent(MainActivity.this,ShareListActivity.class);
+			    				startActivity(shareListIntent);	
+		                        break;
+		 
+		                case 1:
+		                        // 删除操作
+		                		
+	        		        	int result =request.deleteList(curList);
+        		        	
+		        		        if (result==0){
+		        		        	
+		        		        	list.deleteItem(pos+1);
+		        		        	
+		        		        	SharedPreferences prefer = MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE+Context.MODE_WORLD_READABLE);
+		        		        	int listCount=prefer.getInt("listCount", 1);
+		        		        	Editor editor = prefer.edit();
+		        		        	editor.putInt("listCount", listCount-1);
+		        		        	editor.commit();
+		        		        	}
+		        		        else
+		        		        	Toast.makeText(MyApplication.getInstance(), "底层有数据", Toast.LENGTH_LONG);
+		        		        cursor.close();
+		        		        list.close();
+		        		        InitView();
+		                        break;
+		 
+		                case 2:
+		                        // 重命名操作
+		                	 	AlertDialog builderCreate = null;
+		                		builder = new AlertDialog.Builder(this);
+		                		builder.setIcon(R.drawable.ic_launcher);
+		        				builder.setTitle("列表重命名");
+		        				final View modify = (View)getLayoutInflater().inflate(R.layout.modify_list_name_layout, null);
+		        				builder.setView(modify);
+		        				builder.setPositiveButton("修改", new DialogInterface.OnClickListener() {
+		        					
+		        					@Override
+		        					public void onClick(DialogInterface arg0, int arg1) {
+		        						// TODO Auto-generated method stub
+		        						
+		        						 EditText rename= (EditText)modify.findViewById(R.id.new_list_name);
+		        						 String newName = rename.getText().toString();
+		        						 
+		        						 if(request.modifyListName(newName, curList)==0)
+		        							 list.updateItem(pos+1, curList, newName, create_time, total, _class);
+
+		        						 cursor.close();
+		        	        		     list.close();
+		        	        		     InitView();
+		        						 Toast.makeText(MainActivity.this, "保存成功", 3000).show();
+		        					}
+		        				});
+		        				builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+		        					
+		        					@Override
+		        					public void onClick(DialogInterface dialog, int which) {
+		        						// TODO Auto-generated method stub
+		        						cursor.close();
+		                		        list.close();
+		                		        InitView();
+		        					}
+		        				});
+		        				builderCreate =  builder.create();builderCreate.show();//从工厂中取得dialog对象
+
+		                	
+		                        break;
+		 
+		                default:
+		                        break;
+		                }
+		                return super.onContextItemSelected(item);
+		 
+		        }
+
+	
 	
 	//为了代码复用，onCreate and onResume同样适用
     private void mainFunction() { 
         
     	
     	
-        TextView loginBtn=(TextView)this.findViewById(R.id.loginlabel);
-
-    	InitView();
-        
-        loginBtn.setOnClickListener(new OnClickListener(){
-        	
-        	@Override
-        	public void onClick(View v){
-        		Intent loginIntent=new Intent(MainActivity.this,LoginActivity.class);
-        		startActivity(loginIntent);
-        	}
-        });
+    	
+        TextView loginLabel=(TextView)this.findViewById(R.id.loginlabel);
+      
+        SharedPreferences preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+        String read_username = preferences.getString("username", "");
+        String read_password = preferences.getString("password", "");
+        if(read_username != "" && read_password != ""){
+        	loginLabel.setText(read_username);
+        }
         
         
         ImageView add_list_btn=(ImageView)findViewById(R.id.add_list_btn);
@@ -586,7 +704,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
+	
 				Intent add_list_intent=new Intent(MainActivity.this,AddNewListActivity.class);
 				startActivity(add_list_intent);
 			}
@@ -619,14 +737,38 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
 				Intent addEventIntent =new Intent(MainActivity.this,AddNewEventActivity.class);
 				startActivity(addEventIntent);
+			}
+    	});
+    	
+    	
+    	TextView toFinish=(TextView)findViewById(R.id.to_finish);
+    	toFinish.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent toFinishIntent = new Intent(MainActivity.this,FinishActivity.class);
+				startActivity(toFinishIntent);
+			}		
+    	});
+
+    	ImageView shareList = (ImageView)findViewById(R.id.share_list);
+    	shareList.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent shareListIntent = new Intent(MainActivity.this,ShareListActivity.class);
+				startActivity(shareListIntent);			
 			}
     		
     	});
     	
 	}
+    
+    
 	
 
 }

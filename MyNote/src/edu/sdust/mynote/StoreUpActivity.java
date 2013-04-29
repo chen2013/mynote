@@ -25,11 +25,14 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
@@ -38,7 +41,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class StoreUpActivity extends Activity {
-
+	private String curList=null;
 	private String dbCreate = "create table if not exists memo (item_id integer primary key,item_content string,create_time long,starrted integer,due_date long,completed integer,repeat_type integer)";
 	private Builder builder;
 	private MyDragListView listView;
@@ -50,7 +53,7 @@ public class StoreUpActivity extends Activity {
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+       super.onCreate(savedInstanceState);
        setContentView(R.layout.storeup);
        
        
@@ -69,7 +72,6 @@ public class StoreUpActivity extends Activity {
     
     private void dataBinding() {
 		// TODO Auto-generated method stub
-    	 String curList=null;
          builder = new AlertDialog.Builder(this);
          
          SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
@@ -78,6 +80,7 @@ public class StoreUpActivity extends Activity {
          
          list.open();
          Cursor cursor=list.getItem(position+1);
+         cursor.moveToFirst();
          curList = cursor.getString(0);
          cursor.close();
          
@@ -165,12 +168,13 @@ public class StoreUpActivity extends Activity {
 					public void onClick(View arg0) {
 						// TODO Auto-generated method stub
 						
+						
 						List<Memo> list=databaseHelper.selectByKey(arg2+1);
 						for (Memo memo :list){
 							Log.v("从这里"+arg2+"查询到的item_id",memo.getItem_id()+"kongde" );
 							String item_id=memo.getItem_id();
 							databaseHelper.deleteById(item_id);
-							request.deleteEvent("D9E12762AC824E4BDC02C00212CC37E1", item_id);
+							request.deleteEvent(curList, item_id);
 						}
 						init();
 						Toast.makeText(StoreUpActivity.this, "删除", 3000).show();
@@ -199,6 +203,10 @@ public class StoreUpActivity extends Activity {
 						 }
 						
 						 databaseHelper.updata(memo);
+						 
+						 List<Memo> list = databaseHelper.selectByKey(arg2+1);
+						 for (Memo memo1:list)
+							 request.modifyEventContent(memo1.getItem_id(), memo.getItem_content());
 						 
 						 init();
 						 Toast.makeText(StoreUpActivity.this, "保存成功", 3000).show();
@@ -232,6 +240,7 @@ public class StoreUpActivity extends Activity {
     	//SimpleAdapter adapter = new SimpleAdapter(this, resultList, R.layout.line, new String[]{"title","content"}, new int[]{R.id.title,R.id.content});
     	//listView.setAdapter(adapter);
     	databaseHelper.close();
+
     }
 
  

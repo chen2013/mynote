@@ -10,7 +10,7 @@
             android:background="@drawable/nav_bg" >
 
             <Button
-			    android:id="@+id/add_list_back_btn"
+			    android:id="@+id/share_list_back_btn"
 				android:layout_width="40dip"
 				android:layout_height="24dip"
 				android:background="@drawable/back_bg"
@@ -27,7 +27,7 @@
                 android:textColor="@android:color/background_light"
                 android:textSize="20sp" />
             <Button
-			    android:id="@+id/add_list_commit_btn"
+			    android:id="@+id/share_list_commit_btn"
 				android:layout_width="40dip"
 				android:layout_height="24dip"
 				android:background="@drawable/commit_bg"
@@ -41,19 +41,27 @@
     	android:orientation="vertical"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent">
+	    <TextView
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content"
+			android:text="分享给好友："
+			android:textColor="#33333333"
+			android:textSize="10dip"
+		>
+		</TextView>
 	    <EditText
-	    	android:id="@+id/add_new_list_name"
+	    	android:id="@+id/share_to_whom"
 		    android:maxLines="1"
 		    android:maxLength="20"
-		    android:hint="@string/list_name"
+		    android:hint="好友名称"
 			android:layout_height="wrap_content"
 			android:layout_width="fill_parent"
 		    android:layout_marginTop="10dip">
 		</EditText>
 		<TextView
 			android:layout_width="fill_parent"
-			android:layout_height="fill_parent"
-			android:text="@string/add_list_warn"
+			android:layout_height="wrap_content"
+			android:text="感谢您的分享"
 			android:textColor="#33333333"
 			android:textSize="10dip"
 		>

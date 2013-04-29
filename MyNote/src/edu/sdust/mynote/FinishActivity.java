@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -159,6 +160,19 @@ public class FinishActivity extends Activity {
 		});
     	listView.setAdapter(adapter);Log.v("for", "-");
     	databaseHelper.close();
+    	
+    	
+    	
+    	Button to_finish_back = (Button)findViewById(R.id.to_finish_back_btn);
+    	to_finish_back.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+    		
+    	});
     }
 
 
