@@ -8,8 +8,6 @@ import edu.sdust.mynote.MyApplication;
 import edu.sdust.mynote.MyLinearLayout.OnScrollListener;
 import edu.sdust.mynote.bean.Memo;
 import edu.sdust.mynote.database.Lists;
-import edu.sdust.mynote.menu.AboutUsActivity;
-import edu.sdust.mynote.menu.FeedbackActivity;
 import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.service.HttpPostRequest;
 
@@ -142,7 +140,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		iv_set = (ImageView) findViewById(R.id.iv_set);
 		lv_set = (ListView) findViewById(R.id.lv_set);
 		
-		lv_set.setAdapter(new ArrayAdapter<String>(this, R.layout.item_old,
+		lv_set.setAdapter(new ArrayAdapter<String>(this, R.layout.list_item_layout,
 				R.id.tv_item, title));
 		
 		
@@ -178,7 +176,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		});
 		
 		
-		//注：setOnCreateContextMenuListener是与下面onContextItemSelected配套使用的
+		//注：setOnCreateContextMenuListener是与下面onContextItemSelected配套使用的实现长按是的菜单
 		lv_set.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
 		       public void onCreateContextMenu(ContextMenu menu, View v,
 		              ContextMenuInfo menuInfo) {
@@ -245,7 +243,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		setContentView(R.layout.main);
+		setContentView(R.layout.main_layout);
 		
 	   	InitView();
 		mainFunction();
@@ -586,24 +584,24 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		}
 	};	
 	
-		        // 长按菜单响应函数
-		        public boolean onContextItemSelected(MenuItem item) {
+	// 长按菜单响应函数
+	public boolean onContextItemSelected(MenuItem item) {
 		 
-		                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
+		AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item
 		                                .getMenuInfo();
-		                final int pos = (int) info.position;// 这里的info.id对应的就是数据库中rowId的值
+		final int pos = (int) info.position;// 这里的info.id对应的就是数据库中rowId的值
 		                
-		                Log.v("chang an shijian ", ""+pos+1);
+		Log.v("chang an shijian ", ""+pos+1);
 		 
-		                list.open();
-        		        final Cursor cursor=list.getItem(pos+1);
-        		        cursor.moveToFirst();
-        		        final String curList = cursor.getString(0);
-        		        final String create_time=cursor.getString(2);
-        		        final int total = cursor.getInt(3);
-        		        final String _class = cursor.getString(4);
+		list.open();
+        final Cursor cursor=list.getItem(pos+1);
+        cursor.moveToFirst();
+        final String curList = cursor.getString(0);
+        final String create_time=cursor.getString(2);
+        final int total = cursor.getInt(3);
+        final String _class = cursor.getString(4);
         		        	               		        
-		                switch (item.getItemId()) {
+		    switch (item.getItemId()) {
 		                case 0:
 		                        // 分享操作
 			                	Intent shareListIntent = new Intent(MainActivity.this,ShareListActivity.class);
@@ -762,6 +760,18 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 				// TODO Auto-generated method stub
 				Intent shareListIntent = new Intent(MainActivity.this,ShareListActivity.class);
 				startActivity(shareListIntent);			
+			}
+    		
+    	});
+    	
+    	ImageView setting = (ImageView)findViewById(R.id.main_setting);
+    	setting.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent settingIntent = new Intent(MainActivity.this,SettingActivity.class);
+				startActivity(settingIntent);
 			}
     		
     	});

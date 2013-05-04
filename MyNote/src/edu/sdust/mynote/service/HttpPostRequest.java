@@ -27,8 +27,10 @@ import android.util.Log;
 import android.widget.Toast;
 import edu.sdust.mynote.MyApplication;
 import edu.sdust.mynote.bean.Memo;
+import edu.sdust.mynote.bean.Note;
 import edu.sdust.mynote.database.DatabaseHelper;
 import edu.sdust.mynote.database.Lists;
+import edu.sdust.mynote.database.NoteDB;
 import edu.sdust.mynote.function.DealWithDate;
 import edu.sdust.mynote.function.DealWithString;
 import edu.sdust.mynote.receiver.AlarmReceiver;
@@ -36,13 +38,14 @@ import edu.sdust.mynote.receiver.AlarmReceiver;
 public class HttpPostRequest {
 	
 	private Calendar cal = Calendar.getInstance();;
-	private DealWithDate dealWithDate=new DealWithDate();;
+	private DealWithDate dealWithDate=new DealWithDate();
 	public static String dbCreate = "create table if not exists memo (item_id text primary key,item_content string,create_time long,starrted integer,due_date long,completed integer,repeat_type integer)";
 	public static String dbCreate_memo01 = "create table if not exists memo01 (item_id text primary key,item_content string,create_time long,starrted integer,due_date long,completed integer,repeat_type integer)";
 	Lists lists =new Lists(MyApplication.getInstance());
 	DatabaseHelper db_memo = new DatabaseHelper(MyApplication.getInstance(), "gtask", 1, dbCreate, "memo");
 	DatabaseHelper db_memo01 = new DatabaseHelper(MyApplication.getInstance(), "gtask", 1, dbCreate_memo01, "memo01");
-	
+	private String dbCreate_note = "create table if not exists note (note_id text primary key,note_title text,note_create_time long,note_content text)";
+	NoteDB noteDb = new NoteDB(MyApplication.getInstance(),"notes",1, dbCreate_note,"note");
 	
 	//获取登陆的返回数据
 	public String sendPostForLogin(String username,String password){
@@ -539,7 +542,7 @@ public class HttpPostRequest {
 	}
 
 	//新建事务,返回错误代码~~~
-	public int addNewEvent(String event_content,String list_id){
+	public int addNewEvent(String event_content,String list_id,String event_date,String event_time,String starred){
 		/*建立HTTPost对象*/
         HttpPost httpPost = new HttpPost(SettingIP.GetIP()+"Event.php");        
         HttpClient client = new DefaultHttpClient();
@@ -551,14 +554,19 @@ public class HttpPostRequest {
         
         int res = 20;
 
+        Log.v("adfasdf", event_content+list_id+event_date+event_time+starred);
+        
         /*
          * NameValuePair实现请求参数的封装
        */
         List<NameValuePair> params = new ArrayList<NameValuePair>(); 
-        params.add(new BasicNameValuePair("action","new"));
+        params.add(new BasicNameValuePair("action","new_android"));
         params.add(new BasicNameValuePair("list_id",list_id));
         params.add(new BasicNameValuePair("event_content",event_content));
         params.add(new BasicNameValuePair("token",token_c));
+        params.add(new BasicNameValuePair("event_date",event_date));
+        params.add(new BasicNameValuePair("event_time",event_time));
+        params.add(new BasicNameValuePair("starred",starred));
         
         try {
 		    httpPost.setEntity(new UrlEncodedFormEntity(params,"UTF-8"));
@@ -810,28 +818,37 @@ public class HttpPostRequest {
                 	Log.v("starrted OK",""+memo.getStarrted());
                 	
                 	memo.setCompleted(jsonObj.getBoolean("event_completed")?1:0);
+                	Log.v("completed OK",""+memo.getCompleted());
                 	
-                	String due_date=jsonObj.getString("event_due_date")+jsonObj.getString("event_due_time");
-                	if (due_date!=""){
-                	cal.setTime(dealWithDate.strToDateLong(due_date));
-                	memo.setDue_date(cal.getTimeInMillis());
+                	String due_date=jsonObj.getString("event_due_date")+" "+jsonObj.getString("event_due_time");
+                	Log.v("due_time OK","due-date"+due_date);       	
+                	if (due_date!=" "){
+	                	cal.setTime(dealWithDate.strToDateLong(due_date));
+	                	memo.setDue_date(cal.getTimeInMillis());
                 	}else
-                	memo.setDue_date(Calendar.getInstance().getTimeInMillis());
-                	Log.v("due_time OK","due-date"+due_date);
+                		memo.setDue_date(Calendar.getInstance().getTimeInMillis());
                 	memo.setRepeat_type(0);
                 	
                 	if (memo.getCompleted()==0){
                 		
-                		db_memo.insertData(memo);
                 		
-//                		AlarmManager alarmManager = (AlarmManager)MyApplication.getInstance().getSystemService(Context.ALARM_SERVICE);//取得系统闹钟服务
-//                		Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
-//	       				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
-//	       				intent.putExtra("item_id", memo.getItem_id());
-//                        PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, 0);    //创建PendingIntent 
-//                        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+                		Date date = new Date();
+
+                		if (date.getTime()<memo.getDue_date()){
+                    		db_memo.insertData(memo);
+	                		AlarmManager alarmManager = (AlarmManager)MyApplication.getInstance().getSystemService(Context.ALARM_SERVICE);//取得系统闹钟服务
+	                		Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
+		       				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
+		       				intent.putExtra("item_id", memo.getItem_id());
+	                        PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, 0);    //创建PendingIntent 
+	                        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
+                        }
+                		else{
+                			modifyCompleted(memo.getItem_id());
+                			db_memo01.insertData(memo);
+                		}
                 	}
-                	else{
+                	else if (memo.getCompleted()==1){
                 		db_memo01.insertData(memo);
                 	}               	
                 }    
@@ -1267,6 +1284,95 @@ public class HttpPostRequest {
                 Log.v("tohear--modifyNote",string);
                 JSONObject jsonObject = new JSONObject(string);//需要去掉前边一段乱码
                 res = jsonObject.getInt("error_code");
+                return res;
+            	}
+            else{
+            	Log.v("res","meiyou renhe xiangying");
+            }
+            }
+            catch (Exception e) {
+		    	 Log.v("url response", "false");
+		    	 e.printStackTrace();
+            }
+        return res;
+	}
+	//获取笔记,返回错误代码~~~
+	public int getNote(String event_id){
+		
+		/*建立HTTPost对象*/
+        HttpPost httpPost = new HttpPost(SettingIP.GetIP()+"Note.php");        
+        HttpClient client = new DefaultHttpClient();
+        StringBuilder builder = new StringBuilder();
+        SharedPreferences token=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+        String token_c=token.getString("token", "");
+        
+        int res = 20;
+        
+
+        noteDb.open();
+        noteDb.deleteAll("note");
+        noteDb.close();
+
+        /*
+         * NameValuePair实现请求参数的封装
+       */
+        List<NameValuePair> params = new ArrayList<NameValuePair>(); 
+        params.add(new BasicNameValuePair("action","gettitles"));
+        params.add(new BasicNameValuePair("event_id",event_id));
+        params.add(new BasicNameValuePair("token",token_c));
+        
+        try {
+		    httpPost.setEntity(new UrlEncodedFormEntity(params,"UTF-8"));
+		} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		}
+        try 
+        {
+            //HttpResponse httpResponse = client.execute(httpRequest);
+        	HttpResponse httpResponse = client.execute(httpPost);
+            int resInt = httpResponse.getStatusLine().getStatusCode();
+            if (resInt == 200) { 
+                /* 
+                 * 当返回码为200时，做处理 
+                 * 得到服务器端返回json数据，并做处理 
+                 * */  
+                BufferedReader bufferedReader = new BufferedReader( 
+                        new InputStreamReader(httpResponse.getEntity().getContent(),"UTF-8"));  
+                for (String s = bufferedReader.readLine(); s != null; s = bufferedReader
+                        .readLine()) {
+                    builder.append(s); 
+                } 	   
+                
+                DealWithString deal=new DealWithString();
+                String string=deal.strToJson(builder.toString());
+                Log.v("tohear-getAllEvent",string);
+                JSONObject jsonObject = new JSONObject(string);//需要去掉前边一段乱码
+                res = jsonObject.getInt("error_code");
+                         
+                Note note = new Note();
+                
+                JSONArray jsonArray = jsonObject.getJSONArray("notes_title");
+                int iSize = jsonArray.length();
+              
+                noteDb.open();
+                Log.v("iSize", ""+iSize);
+                for(int i=0;i<iSize;++i){
+                	
+                	JSONObject jsonObj = jsonArray.getJSONObject(i);
+                	note.setNote_id(jsonObj.getString("note_id"));
+                	note.setNote_content(jsonObj.getString("note_content"));
+                	note.setNote_title(jsonObj.getString("note_title"));
+                	
+                	String create_time=jsonObj.getString("note_created_time");
+                	
+                	Log.v("huode le note", note.getNote_id()+note.getNote_title()+note.getNote_content()+create_time);
+                	note.setNote_created_time(dealWithDate.strToDate(create_time).getTime());
+                	
+                	noteDb.insertData(note);
+                }
+	            noteDb.close();
+                
                 return res;
             	}
             else{

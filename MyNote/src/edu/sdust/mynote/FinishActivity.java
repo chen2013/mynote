@@ -45,7 +45,7 @@ public class FinishActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.finish);
+       setContentView(R.layout.finished_layout);
        builder = new AlertDialog.Builder(this);
        init();
     }
@@ -61,6 +61,7 @@ public class FinishActivity extends Activity {
     	List<String> titles = new ArrayList<String>();
     	List<Integer> drawables = new ArrayList<Integer>();
     	List<Integer> idList = new ArrayList<Integer>();
+    	List<String> top = new ArrayList<String>();
     	Log.v("show", "init");
     	
     	databaseHelper.open();
@@ -78,11 +79,12 @@ public class FinishActivity extends Activity {
     		cal.setTimeInMillis(memo.getDue_date());
 			titles.add(i+1+"---"+(memo.getItem_content().toString().length()>10?memo.getItem_content().toString().substring(0, 10):memo.getItem_content().toString()+"..."+"\n"+"结束时间："+cal.get(Calendar.YEAR)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.DAY_OF_MONTH)+"~~"+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)));
 			drawables.add(R.drawable.ic_launcher);
+			top.add("已完成");
 			idList.add(i+1);
 			va.add(i++);
 		}
     	
-    	adapter = new DragListAdapter(this, titles, drawables,list);
+    	adapter = new DragListAdapter(this, titles,top, drawables,list);
     	
     	listView.setAdapter(adapter);
     	
@@ -96,7 +98,7 @@ public class FinishActivity extends Activity {
 				//Log.v("log", ""+arg2+"."+((DragListAdapter.ViewData<String, Integer>)arg1.getTag()).value);
 				builder.setIcon(R.drawable.ic_launcher);
 				builder.setTitle("备忘");
-				final View reset = (View)getLayoutInflater().inflate(R.layout.reset, null);
+				final View reset = (View)getLayoutInflater().inflate(R.layout.event_reset_layout, null);
 				builder.setView(reset);
 				Memo memo = (Memo)arg1.getTag();
 				final EditText con = (EditText)reset.findViewById(R.id.content);

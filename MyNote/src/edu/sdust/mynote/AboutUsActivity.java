@@ -1,4 +1,4 @@
-package edu.sdust.mynote.menu;
+package edu.sdust.mynote;
 
 import edu.sdust.mynote.pull.R;
 import android.app.Activity;

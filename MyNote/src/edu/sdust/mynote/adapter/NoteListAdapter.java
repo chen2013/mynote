@@ -1,9 +1,11 @@
 package edu.sdust.mynote.adapter;
 
+
 import java.util.ArrayList;
 import java.util.List;
 
 import edu.sdust.mynote.bean.Memo;
+import edu.sdust.mynote.bean.Note;
 import edu.sdust.mynote.pull.R;
 
 
@@ -16,19 +18,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class DragListAdapter extends BaseAdapter {
+public class NoteListAdapter extends BaseAdapter {
 
 	private List<String> list_titles;
 	private List<Integer> list_drawables;
 	private List<Integer> va;
-	private List<String> list_top;
+	private List<String> contents;
 	private Context context;
 
 	private int i = 0;
-	private List<Memo> list;
+	private List<Note> list;
 	private int id;
-	public DragListAdapter(Context context, List<String> titles,List<String> top,
-			List<Integer> drawables,List<Memo> list) {
+	public NoteListAdapter(Context context, List<String> titles,List<String> contents,
+			List<Integer> drawables,List<Note> list) {
 		if (titles == null) {
 			this.list_titles = new ArrayList<String>();
 		} else {
@@ -36,13 +38,14 @@ public class DragListAdapter extends BaseAdapter {
 		}
 		if (drawables == null) {
 			this.list_drawables = new ArrayList<Integer>();
-		} else {
+		}else {
 			this.list_drawables = drawables;
 		}
-		if (top == null) {
-			list_top = new ArrayList<String>();
-		} else {
-			list_top = top;
+		if (contents == null) {
+			this.contents = new ArrayList<String>();
+		}
+		else{
+			this.contents=contents;
 		}
 		this.context = context;
 		this.list = list;
@@ -68,25 +71,15 @@ public class DragListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		View view = LayoutInflater.from(context).inflate(R.layout.event_item_layout, null);
-		TextView tv = (TextView) view.findViewById(R.id.tv);
-		ImageView iv = (ImageView) view.findViewById(R.id.iv);
-		ImageView iv_star = (ImageView) view.findViewById(R.id.iv_star);
-		TextView top = (TextView)view.findViewById(R.id.tv_top);
+		View view = LayoutInflater.from(context).inflate(R.layout.note_item_layout, null);
+		TextView title = (TextView) view.findViewById(R.id.note_title);
+		ImageView iv = (ImageView) view.findViewById(R.id.note_iv);
+		TextView content = (TextView)view.findViewById(R.id.note_content);
 	
-		tv.setText(this.list_titles.get(position));
+		title.setText(this.list_titles.get(position));
+		content.setText(this.contents.get(position));
 		view.setTag(list.get(position));
-		top.setText(list_top.get(position));
-		if(list.get(position).getStarrted() == 0)
-		{
-			iv_star.setImageResource(R.drawable.star_normal);
-		}else if(list.get(position).getStarrted() == 1)
-		{
-			iv_star.setImageResource(R.drawable.star_important);
-		}else 
-		{
-			iv_star.setImageResource(R.drawable.star_nothing);
-		}
+		
 		iv.setImageResource(this.list_drawables.get(position));
 		return view;
 	}
@@ -94,19 +87,19 @@ public class DragListAdapter extends BaseAdapter {
 	public void exchange(int start, int end) {
 		Integer drawable = this.list_drawables.get(start);
 		String title = list_titles.get(start);
-		String top = list_top.get(start);
-		
-		Memo org1 = list.get(start);
+		String content = contents.get(start);
+		Note org1 = list.get(start);
 		
 		list.remove(start);
 		list.add(end, org1);
 		
 		list_drawables.remove(start);
 		list_titles.remove(start);
-		list_top.remove(start);
+		contents.remove(start);
 		list_drawables.add(end, drawable);
 		list_titles.add(end, title);
-		list_top.add(end,top);
+		contents.add(end,content);
+		
 		this.notifyDataSetChanged();
 
 	}
@@ -126,3 +119,4 @@ public class DragListAdapter extends BaseAdapter {
 		public ViewData(R arg1,T arg2){name = arg1;value = arg2;}
 	}
 }
+

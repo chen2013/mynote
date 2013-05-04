@@ -30,7 +30,7 @@
 	        android:focusable="false"
 	        android:clickable="true"
 	        android:layout_height="40dip"
-	        android:src="@drawable/star_important">
+	        android:src="@drawable/star_normal">
         </ImageView>
 	    <TextView 
 		    android:text="TextView1" 

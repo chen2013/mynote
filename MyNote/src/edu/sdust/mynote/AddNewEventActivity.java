@@ -34,6 +34,7 @@ import java.util.Date;
 import edu.sdust.mynote.bean.Memo;
 import edu.sdust.mynote.database.DatabaseHelper;
 import edu.sdust.mynote.database.Lists;
+import edu.sdust.mynote.function.DealWithDate;
 import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.receiver.AlarmReceiver;
 import edu.sdust.mynote.service.HttpPostRequest;
@@ -49,6 +50,7 @@ public class AddNewEventActivity extends Activity {
 	private Button setBtn,setDataBtn;
 	private AlarmManager alarmManager=null; 
 	private HttpPostRequest request=new HttpPostRequest();
+	private DealWithDate dealWithDate = new DealWithDate();
 	private Lists list = new Lists(MyApplication.getInstance());
     
     final int DIALOG_TIME = 0;    //设置对话框id  
@@ -57,10 +59,13 @@ public class AddNewEventActivity extends Activity {
     private boolean isSetData = false;
     private boolean isSetTime = false;
     private Calendar cal;
+    private String starred="false";
+    
+    
     @Override
     public void onCreate(Bundle savedInstanceState) {
        super.onCreate(savedInstanceState);
-       setContentView(R.layout.add);
+       setContentView(R.layout.add_new_event_layout);
        alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);//取得系统闹钟服务
        findView();
        initListen();
@@ -88,19 +93,24 @@ public class AddNewEventActivity extends Activity {
 			public void onClick(View v) {
 				databaseHelper.open();
 				Memo memo = new Memo();
-				memo.setItem_content(((EditText)findViewById(R.id.content)).getText().toString());
-				memo.setCreate_time(cal.getInstance().getTimeInMillis());
+				
+				EditText event_content = (EditText)findViewById(R.id.event_content);
+				memo.setItem_content(event_content.getText().toString());
+				memo.setCreate_time(cal.getTimeInMillis());
 				memo.setDue_date(cal.getTimeInMillis());
 				memo.setCompleted(0);
 				if(((RadioButton)findViewById(R.id.radio0)).isChecked())
 				{
 					memo.setStarrted(0);
+					starred="false";
 				}else if(((RadioButton)findViewById(R.id.radio1)).isChecked())
 				{
 					memo.setStarrted(1);
+					starred="true";
 				}else
 				{
 					memo.setStarrted(2);
+					starred="false";
 				}
 				memo.setRepeat_type(0);
 				
@@ -113,35 +123,96 @@ public class AddNewEventActivity extends Activity {
 		        Cursor cursor=list.getItem(position+1);
 		        String curList = cursor.getString(0);
 		        cursor.close();
+		        list.close();
 				
 
-				request.addNewEvent(memo.getItem_content(), curList);
-				
-				String event_id=prefer.getString("newEvent", "0");
-				
-				memo.setItem_id(event_id);
-				
-				databaseHelper.insertData(memo);
-				databaseHelper.close();
-
-				Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
-				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
-				Log.v("to broadcast", memo.getItem_content()+","+String.valueOf(memo.getStarrted())+","+String.valueOf(memo.getDue_date()));
-				intent.putExtra("event_id", event_id);
-                PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);    //创建PendingIntent 
-                if(!isSetData && !isSetTime)
-            	{	
-                	
-            	}else if(checkBox.isChecked() == false) 
+//				request.addNewEvent(memo.getItem_content(), curList);
+//				
+//				String event_id=prefer.getString("newEvent", "0");
+//				
+//				memo.setItem_id(event_id);
+//				
+//				databaseHelper.insertData(memo);
+//				databaseHelper.close();
+//
+//				Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
+//				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
+//				Log.v("to broadcast", memo.getItem_content()+","+String.valueOf(memo.getStarrted())+","+String.valueOf(memo.getDue_date()));
+//				intent.putExtra("event_id", event_id);
+//                PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);    //创建PendingIntent 
+                
+		        if(checkBox.isChecked() == false) 
             	{
+            		if (request.addNewEvent(memo.getItem_content(), curList,dealWithDate.dateToStr(cal.getTime()),dealWithDate.timeToStr(cal.getTime()),starred)!=0){
+            			Toast.makeText(MyApplication.getInstance(), "添加失败~", Toast.LENGTH_LONG).show();
+            			databaseHelper.close();
+            			finish();
+            		}
+    				String event_id=prefer.getString("newEvent", "0");
+    				
+    				memo.setItem_id(event_id);
+    				
+    				databaseHelper.insertData(memo);
+    				databaseHelper.close();
+
+//            		Date date = new Date();
+//                	request.modifyDate(event_id, dealWithDate.dateToStr(date));
+//                	request.modifyTime(event_id,"10:00:00");
                 		
-            	}else 
+            	}
+		        else if(!isSetData && !isSetTime)
+	            	{	
+		        		cal.add(Calendar.DAY_OF_MONTH,1);
+	                	if (request.addNewEvent(memo.getItem_content(), curList,dealWithDate.dateToStr(cal.getTime()),"10:00:00",starred)!=0){
+	            			Toast.makeText(MyApplication.getInstance(), "添加失败~", Toast.LENGTH_LONG).show();
+	            			databaseHelper.close();
+	            			finish();
+	            		}
+	    				String event_id=prefer.getString("newEvent", "0");
+	    				
+	    				memo.setItem_id(event_id);
+	    				
+	    				databaseHelper.insertData(memo);
+	    				databaseHelper.close();
+	    				
+//	                	Date date = new Date();
+//	                	request.modifyDate(event_id, dealWithDate.dateToStr(date));
+//	                	request.modifyTime(event_id,"10:00:00");
+	                	
+		        }
+            	else 
             	{
+            		
+//            		request.modifyDate(event_id, dealWithDate.dateToStr(cal.getTime()));
+//            		request.modifyTime(event_id, dealWithDate.timeToStr(cal.getTime()));
+//            		request.addNewEvent(memo.getItem_content(), curList);
+    				
+            		Date date = cal.getTime();
+            		
+            		if (request.addNewEvent(memo.getItem_content(), curList,dealWithDate.dateToStr(date),dealWithDate.timeToStr(date),starred)!=0){
+            			Toast.makeText(MyApplication.getInstance(), "添加失败~", Toast.LENGTH_LONG).show();
+            			databaseHelper.close();
+            			finish();
+            		}
+    				String event_id=prefer.getString("newEvent", "0");
+    				
+    				Log.v("dateformat", dealWithDate.dateToStr(date)+"  "+dealWithDate.timeToStr(date));
+    				
+    				memo.setItem_id(event_id);
+    				
+    				databaseHelper.insertData(memo);
+    				databaseHelper.close();
+
+    				Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
+    				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
+    				Log.v("to broadcast", memo.getItem_content()+","+String.valueOf(memo.getStarrted())+","+String.valueOf(memo.getDue_date()));
+    				intent.putExtra("event_id", event_id);
+                    PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);    //创建PendingIntent 
+//            		
             		alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
             		Log.v("tag","send");
             	}
-                
-				Toast.makeText(AddNewEventActivity.this, "添加成功", Toast.LENGTH_LONG).show(); 
+                 
                 isSetData = isSetTime = false;
 				Log.v("tag", ""+System.currentTimeMillis());
 				Log.v("tag", ""+cal.getTimeInMillis());
@@ -233,6 +304,7 @@ public class AddNewEventActivity extends Activity {
 					if(!isSetTime)
 					{
 						cal.setTimeInMillis(System.currentTimeMillis());
+						cal.add(Calendar.HOUR_OF_DAY, 2);
 					}
 					cal.set(Calendar.YEAR, arg1);
 					cal.set(Calendar.MONTH, arg2);

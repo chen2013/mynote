@@ -1,7 +1,5 @@
 package edu.sdust.mynote;
 
-import edu.sdust.mynote.menu.AboutUsActivity;
-import edu.sdust.mynote.menu.FeedbackActivity;
 import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.service.HttpPostRequest;
 import edu.sdust.mynote.service.HttpRequest;
@@ -59,10 +57,11 @@ public class LoginActivity extends Activity{
 			}else{
 				Toast.makeText(LoginActivity.this, "绑定成功!",Toast.LENGTH_LONG).show();
 				request.getAllList();
+				
 				Intent mainIntent= new Intent(LoginActivity.this,MainActivity.class);
 				startActivity(mainIntent);
-				LoginActivity.this.finish();
 			}
+			LoginActivity.this.finish();
 		}
 	};
 	Handler NetError = new Handler() {
@@ -373,35 +372,6 @@ public class LoginActivity extends Activity{
 		return (info != null && info.isConnected());
 	}//end checkNetwork
 	
-	
-	
-    
-    //对菜单进行重写
-    @Override  
-	public boolean onCreateOptionsMenu(Menu menu) {
-		  menu.add(Menu.NONE, Menu.FIRST + 1, 1, "意见反馈");
-		 // setIcon()方法为菜单设置图标，这里使用的是系统自带的图标，留意一下,以      
-		 // android.R开头的资源是系统提供的，我们自己提供的资源是以R开头的        
-		  menu.add(Menu.NONE, Menu.FIRST + 2, 2, "关于我们"); 
-		return true;  
-		        }   
-    
-    public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) 
-		{        
-		//选择第一个菜单
-		case Menu.FIRST + 1: 			
-			Intent feedback =new Intent(LoginActivity.this,FeedbackActivity.class);
-			startActivity(feedback); 
-			break;
-		case Menu.FIRST + 2: 
-			Intent aboutUs =new Intent(LoginActivity.this,AboutUsActivity.class);
-			startActivity(aboutUs); 
-			break;     
-		} 
-		return false;  
-		}
-    
     @Override
 	public boolean onKeyDown(int keyCode, KeyEvent event)
 	{

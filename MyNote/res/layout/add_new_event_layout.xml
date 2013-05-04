@@ -34,7 +34,7 @@
         android:text="内容" />
 
     <EditText
-        android:id="@+id/content"
+        android:id="@+id/event_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:minEms="20"
@@ -58,19 +58,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="重要" />
+                android:text="不加星" />
 
             <RadioButton
                 android:id="@+id/radio1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="普通" />
+                android:text="加星" />
 
             <RadioButton
                 android:id="@+id/radio2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="暂停" />
+                android:text="默认" />
         </RadioGroup>
         
        </LinearLayout>

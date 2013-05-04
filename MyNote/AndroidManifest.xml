@@ -15,7 +15,7 @@
         </activity> 
 	    <activity android:name="edu.sdust.mynote.MainActivity"
 	    		  android:theme="@android:style/Theme.NoTitleBar"
-	    		  android:launchMode="singleTop"
+	    		  android:launchMode="singleInstance"
 	    >
 	    </activity>
 	    <activity android:name="edu.sdust.mynote.GuideActivity"
@@ -26,11 +26,11 @@
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    > 
 	    </activity>
-	    <activity android:name="edu.sdust.mynote.menu.AboutUsActivity"
+	    <activity android:name="edu.sdust.mynote.AboutUsActivity"
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    > 
 	    </activity>
-	    <activity android:name="edu.sdust.mynote.menu.FeedbackActivity"
+	    <activity android:name="edu.sdust.mynote.FeedbackActivity"
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    > 
 	    </activity>
@@ -55,6 +55,15 @@
 	    >
 	    </activity>
 	    <activity android:name="edu.sdust.mynote.ShareListActivity"
+	    		  android:theme="@android:style/Theme.NoTitleBar"
+	    >
+	    </activity>
+	    <activity android:name="edu.sdust.mynote.SettingActivity"
+	    		  android:theme="@android:style/Theme.NoTitleBar"
+	    >
+	    </activity>
+	    
+	    	    <activity android:name="edu.sdust.mynote.NoteListActivity"
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    >
 	    </activity>
