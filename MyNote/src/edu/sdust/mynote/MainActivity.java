@@ -83,6 +83,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	private View listView ;
 	
 	private Builder builder;
+	private String curList="";
 
 
 	/** 每次自动展开/收缩的范围 */
@@ -133,6 +134,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		listsDB.close();
 		
 		intentView  = new Intent(MainActivity.this,StoreUpActivity.class);
+		rightContent = (MyLinearLayout) findViewById(R.id.mylaout);
 		
 		layout_left = (LinearLayout) findViewById(R.id.layout_left);
 		layout_right = (LinearLayout) findViewById(R.id.layout_right);
@@ -154,12 +156,12 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 //				intentView.putExtra("position", position);
 //				listView = getLocalActivityManager().startActivity("listView", intentView).getDecorView();
 //				
-				
-				SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE);
-				Editor editor = prefer.edit();
-
-				editor.putInt("position", position);
+				SharedPreferences pre = MyApplication.getInstance().getSharedPreferences("Store", Context.MODE_WORLD_WRITEABLE);
+				Editor editor  = pre.edit();
+				editor.putInt("lastPosition", position);
 				editor.commit();
+				
+				dataBinding(position);
 				
 				Log.v("position click",""+ position);
 				intentView.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);//这里保证StoreUpActivity是单任务模式
@@ -175,6 +177,16 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 			}
 		});
 		
+
+//		SharedPreferences pref = MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+//		int lastPosition = pref.getInt("lastPosition", 0);
+//		if (lastPosition==0)
+//			dataBinding(lastPosition);
+//		listView = getLocalActivityManager().startActivity("listview", intentView).getDecorView();
+//		
+//		rightContent.removeAllViews();
+//		rightContent.addView(listView, 0);
+		
 		
 		//注：setOnCreateContextMenuListener是与下面onContextItemSelected配套使用的实现长按是的菜单
 		lv_set.setOnCreateContextMenuListener(new OnCreateContextMenuListener() {
@@ -186,7 +198,6 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		              }
 		});
 
-		rightContent = (MyLinearLayout) findViewById(R.id.mylaout);
 		
 
 		rightContent.setOnScrollListener(new OnScrollListener() {
@@ -634,7 +645,6 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		                        // 重命名操作
 		                	 	AlertDialog builderCreate = null;
 		                		builder = new AlertDialog.Builder(this);
-		                		builder.setIcon(R.drawable.ic_launcher);
 		        				builder.setTitle("列表重命名");
 		        				final View modify = (View)getLayoutInflater().inflate(R.layout.modify_list_name_layout, null);
 		        				builder.setView(modify);
@@ -776,6 +786,19 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
     		
     	});
     	
+	}
+    
+    private void dataBinding(int position) {
+		// TODO Auto-generated method stub
+    	list.open();
+         Cursor cursor=list.getItem(position+1);
+         cursor.moveToFirst();
+         curList = cursor.getString(0);
+         cursor.close();
+         
+         
+         request.getAllEvent(curList);
+         list.close();
 	}
     
     

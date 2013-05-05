@@ -68,38 +68,17 @@ public class StoreUpActivity extends Activity {
        super.onCreate(savedInstanceState);
        setContentView(R.layout.storeup_layout);
        
-       
-       dataBinding();
+       builder = new AlertDialog.Builder(this);
        init();
     }
     @Override
     public void onResume()
     {
     	super.onResume();
-    	
-    	dataBinding();
+    	builder = new AlertDialog.Builder(this);
     	init();
     }
     
-    
-    private void dataBinding() {
-		// TODO Auto-generated method stub
-         builder = new AlertDialog.Builder(this);
-         
-         SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-         int position = prefer.getInt("position", 0);
-         
-         
-         list.open();
-         Cursor cursor=list.getItem(position+1);
-         cursor.moveToFirst();
-         curList = cursor.getString(0);
-         cursor.close();
-         
-         
-         request.getAllEvent(curList);
-         list.close();
-	}
 	private void init()
     {
     		
@@ -128,7 +107,7 @@ public class StoreUpActivity extends Activity {
     		cal.setTimeInMillis(memo.getDue_date());
 			titles.add(i+1+"---"+(memo.getItem_content().toString().length()>10?memo.getItem_content().toString().substring(0, 10):memo.getItem_content().toString()+"..."+"\n"+"结束时间："+cal.get(Calendar.YEAR)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.DAY_OF_MONTH)+"..."+cal.get(Calendar.HOUR_OF_DAY)+"："+cal.get(Calendar.MINUTE)));
 			Log.v("tag", cal.getTimeInMillis()+"value");
-			drawables.add(R.drawable.ic_launcher);
+			drawables.add(R.drawable.event);
 			top.add("未完成");
 			idList.add(i+1);
 			va.add(i++);
@@ -146,7 +125,6 @@ public class StoreUpActivity extends Activity {
 			public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2,
 					long arg3) {
 				//Log.v("log", ""+arg2+"."+((DragListAdapter.ViewData<String, Integer>)arg1.getTag()).value);
-				builder.setIcon(R.drawable.ic_launcher);
 				builder.setTitle("修改备忘");
 				final View reset = (View)getLayoutInflater().inflate(R.layout.event_reset_layout, null);
 				builder.setView(reset);

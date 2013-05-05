@@ -55,7 +55,7 @@ public class AlarmReceiver extends BroadcastReceiver{
 	        NotificationManager nm =  (NotificationManager)ctx.getSystemService(ns); 
 	         
 	        //Create Notification Object 
-	        int icon = R.drawable.ic_launcher; 
+	        int icon = R.drawable.event; 
 	        CharSequence tickerText = "you have a"+title+"task--->"+"\n"+content; 
 	        long when = System.currentTimeMillis(); 
 	         

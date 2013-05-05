@@ -101,7 +101,7 @@ public class HttpPostRequest {
 		                editor.putString("token",token_c);
 		                editor.commit();
 		                
-		                Toast.makeText(MyApplication.getInstance(), token_c, 1).show();
+		                Toast.makeText(MyApplication.getInstance(), "µÇÂ½³É¹¦", 1).show();
 		                
 		            	}
 		            else

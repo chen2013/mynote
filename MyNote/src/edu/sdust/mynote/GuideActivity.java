@@ -31,7 +31,7 @@ public class GuideActivity extends Activity {
 
 	private int[] ids = { R.drawable.guide_1, R.drawable.guide_2,
 			R.drawable.guide_3, R.drawable.guide_4, 
-			R.drawable.guide_5, R.drawable.guide_6 };
+			R.drawable.guide_5};
 			
 	private List<View> guides = new ArrayList<View>();
 	private ViewPager pager;

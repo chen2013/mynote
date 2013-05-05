@@ -116,7 +116,7 @@ public class NoteListActivity extends Activity {
 			//Log.v("show",memo.getTitle());
 			titles.add(i+1+"---"+(note.getNote_title().toString().length()>10?note.getNote_title().toString().substring(0, 10):note.getNote_title().toString()));
 			content.add(note.getNote_content().toString().length()>10?note.getNote_content().toString().substring(0, 10):note.getNote_content().toString());
-			drawables.add(R.drawable.ic_launcher);
+			drawables.add(R.drawable.note);
 			idList.add(i+1);
 			va.add(i++);
 		}
@@ -149,7 +149,6 @@ public class NoteListActivity extends Activity {
 				AlertDialog builderCreate = null;
 				
 				Toast.makeText(MyApplication.getInstance(), "点击的事件", Toast.LENGTH_LONG).show();
-				builder.setIcon(R.drawable.ic_launcher);
 				builder.setTitle("修改笔记");
 				final View note_layout = (View)getLayoutInflater().inflate(R.layout.add_modify_note_layout, null);
 				builder.setView(note_layout);
