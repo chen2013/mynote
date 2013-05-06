@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="mynote"
+                android:text="分享列表"
                 android:textColor="@android:color/background_light"
                 android:textSize="20sp" />
             <Button
@@ -63,7 +63,7 @@
 			android:layout_height="wrap_content"
 			android:text="感谢您的分享"
 			android:textColor="#33333333"
-			android:textSize="10dip"
+			android:textSize="13dip"
 		>
 		</TextView>
 	</LinearLayout>

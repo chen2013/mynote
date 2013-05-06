@@ -822,11 +822,13 @@ public class HttpPostRequest {
                 	
                 	String due_date=jsonObj.getString("event_due_date")+" "+jsonObj.getString("event_due_time");
                 	Log.v("due_time OK","due-date"+due_date);       	
-                	if (due_date!=" "){
-	                	cal.setTime(dealWithDate.strToDateLong(due_date));
+                	if (due_date==" "){                	
+	                	memo.setDue_date(Calendar.getInstance().getTimeInMillis());
+                	}else{
+                		cal.setTime(dealWithDate.strToDateLong(due_date));
 	                	memo.setDue_date(cal.getTimeInMillis());
-                	}else
-                		memo.setDue_date(Calendar.getInstance().getTimeInMillis());
+                	}
+                		
                 	memo.setRepeat_type(0);
                 	
                 	if (memo.getCompleted()==0){

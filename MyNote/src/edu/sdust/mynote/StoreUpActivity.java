@@ -237,7 +237,7 @@ public class StoreUpActivity extends Activity {
 								 }
 							 }
 							 if (isSetTime){
-								 if (request.modifyTime(memo1.getItem_id(), dealWithDate.dateToStr(cal.getTime()))==0){
+								 if (request.modifyTime(memo1.getItem_id(), dealWithDate.timeToStr(cal.getTime()))==0){
 									 
 									 modifyDateTime.setTime(memo1.getDue_date());
 									 

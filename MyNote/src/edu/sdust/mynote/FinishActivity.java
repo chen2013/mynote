@@ -68,7 +68,7 @@ public class FinishActivity extends Activity {
     	List<Integer> drawables = new ArrayList<Integer>();
     	List<Integer> idList = new ArrayList<Integer>();
     	List<String> top = new ArrayList<String>();
-    	Log.v("show", "init");
+    	//Log.v("show", "init");
     	
     	databaseHelper.open();
     	List<Memo> list = databaseHelper.selectAll();
@@ -81,7 +81,7 @@ public class FinishActivity extends Activity {
 			//map.put("title", memo.getTitle());
 			//map.put("content", memo.getContent());
 			//resultList.add(map);
-			//Log.v("show",memo.getTitle());
+			////Log.v("show",memo.getTitle());
     		cal.setTimeInMillis(memo.getDue_date());
 			titles.add(i+1+"---"+(memo.getItem_content().toString().length()>10?memo.getItem_content().toString().substring(0, 10):memo.getItem_content().toString()+"..."+"\n"+"结束时间："+cal.get(Calendar.YEAR)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+cal.get(Calendar.DAY_OF_MONTH)+"~~"+cal.get(Calendar.HOUR_OF_DAY)+":"+cal.get(Calendar.MINUTE)));
 			drawables.add(R.drawable.event);
@@ -110,7 +110,7 @@ public class FinishActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, final int arg2,
 					long arg3) {
-				//Log.v("log", ""+arg2+"."+((DragListAdapter.ViewData<String, Integer>)arg1.getTag()).value);
+				////Log.v("log", ""+arg2+"."+((DragListAdapter.ViewData<String, Integer>)arg1.getTag()).value);
 				builder.setTitle("备忘");
 				final View reset = (View)getLayoutInflater().inflate(R.layout.event_reset_layout, null);
 				builder.setView(reset);
@@ -133,7 +133,7 @@ public class FinishActivity extends Activity {
 					((RadioButton)reset.findViewById(R.id.radio2)).setChecked(true);
 				}
 				
-				Log.v("tag", ""+memo.getStarrted());
+				//Log.v("tag", ""+memo.getStarrted());
 				final String id = memo.getItem_id();
 				con.setText(memo.getItem_content());
 				databaseHelper.open();
@@ -174,7 +174,7 @@ public class FinishActivity extends Activity {
 			}
     		
 		});
-    	listView.setAdapter(adapter);Log.v("for", "-");
+    	listView.setAdapter(adapter);//Log.v("for", "-");
     	databaseHelper.close();
     	
     	
@@ -198,7 +198,7 @@ public class FinishActivity extends Activity {
 			final int pos = (int) info.position;// 这里的info.id对应的就是数据库中rowId的值，position对应的第一个被点击
 
 			
-			Log.v("chang an shijian ", "pos:"+pos+1);
+			//Log.v("chang an shijian ", "pos:"+pos+1);
 			databaseHelper.open();
 			List<Memo> list = databaseHelper.selectByKey(pos+1);
 			for (Memo memo:list)

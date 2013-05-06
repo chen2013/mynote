@@ -58,7 +58,7 @@ public class AddNewListActivity extends Activity {
 	       		 
 	       		 Lists listsDB=new Lists(MyApplication.getInstance());
 	       		 listsDB.open();
-	       		 Log.v("add_list_label1","open_success");
+	       		 //Log.v("add_list_label1","open_success");
 	       		 
 	       		 
 	       		 //得到添加后从网络段得到的新列表的Id并添加到数据库中

@@ -83,7 +83,7 @@ public class AddNewEventActivity extends Activity {
     	   
        });
        
-       Log.v("ate", ""+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+"/"+Calendar.getInstance().get(Calendar.MINUTE)+"/"+Calendar.getInstance().get(Calendar.YEAR)+"/"+Calendar.getInstance().get(Calendar.MONTH));
+       //Log.V("ate", ""+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+"/"+Calendar.getInstance().get(Calendar.MINUTE)+"/"+Calendar.getInstance().get(Calendar.YEAR)+"/"+Calendar.getInstance().get(Calendar.MONTH));
     }
     public void initListen()
     {
@@ -118,7 +118,7 @@ public class AddNewEventActivity extends Activity {
 				SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
 		        int position = prefer.getInt("lastPosition", 0);
 		        
-		        Log.v("xianzai de position", "position"+position);
+		        //Log.V("xianzai de position", "position"+position);
 		         
 		         
 		        list.open();
@@ -139,7 +139,7 @@ public class AddNewEventActivity extends Activity {
 //
 //				Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
 //				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
-//				Log.v("to broadcast", memo.getItem_content()+","+String.valueOf(memo.getStarrted())+","+String.valueOf(memo.getDue_date()));
+//				//Log.V("to broadcast", memo.getItem_content()+","+String.valueOf(memo.getStarrted())+","+String.valueOf(memo.getDue_date()));
 //				intent.putExtra("event_id", event_id);
 //                PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);    //创建PendingIntent 
                 
@@ -198,7 +198,7 @@ public class AddNewEventActivity extends Activity {
             		}
     				String event_id=prefer.getString("newEvent", "0");
     				
-    				Log.v("dateformat", dealWithDate.dateToStr(date)+"  "+dealWithDate.timeToStr(date));
+    				//Log.V("dateformat", dealWithDate.dateToStr(date)+"  "+dealWithDate.timeToStr(date));
     				
     				memo.setItem_id(event_id);
     				
@@ -207,17 +207,17 @@ public class AddNewEventActivity extends Activity {
 
     				Intent intent = new Intent(MyApplication.getInstance(), AlarmReceiver.class);    //创建Intent对象  
     				intent.putExtra("memo", new String[]{memo.getItem_content(),String.valueOf(memo.getStarrted()),String.valueOf(memo.getDue_date())});
-    				Log.v("to broadcast", memo.getItem_content()+","+String.valueOf(memo.getStarrted())+","+String.valueOf(memo.getDue_date()));
+    				//Log.V("to broadcast", memo.getItem_content()+","+String.valueOf(memo.getStarrted())+","+String.valueOf(memo.getDue_date()));
     				intent.putExtra("event_id", event_id);
                     PendingIntent pi = PendingIntent.getBroadcast(MyApplication.getInstance(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);    //创建PendingIntent 
 //            		
             		alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), pi);
-            		Log.v("tag","send");
+            		//Log.V("tag","send");
             	}
                  
                 isSetData = isSetTime = false;
-				Log.v("tag", ""+System.currentTimeMillis());
-				Log.v("tag", ""+cal.getTimeInMillis());
+				//Log.V("tag", ""+System.currentTimeMillis());
+				//Log.V("tag", ""+cal.getTimeInMillis());
 				finish();
 			}
 		});

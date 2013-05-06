@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:orientation="vertical" >
     <TextView 
-        android:text="修改备忘"
+        android:text="修改事务"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         />

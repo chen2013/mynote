@@ -114,7 +114,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="finished"
+                android:text="查看完成"
                 android:textColor="@android:color/background_light"
                 android:textSize="20sp" 
                 android:id="@+id/to_finish"/>

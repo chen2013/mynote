@@ -148,7 +148,7 @@ public class NoteListActivity extends Activity {
 				
 				AlertDialog builderCreate = null;
 				
-				Toast.makeText(MyApplication.getInstance(), "点击的事件", Toast.LENGTH_LONG).show();
+				//Toast.makeText(MyApplication.getInstance(), "点击的事件", Toast.LENGTH_LONG).show();
 				builder.setTitle("修改笔记");
 				final View note_layout = (View)getLayoutInflater().inflate(R.layout.add_modify_note_layout, null);
 				builder.setView(note_layout);

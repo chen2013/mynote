@@ -136,11 +136,11 @@ public class LoginActivity extends Activity{
 	        // TODO Auto-generated method stub
 	        if(isChecked)
 	        {
-	        	Toast.makeText(LoginActivity.this, "被选中!",Toast.LENGTH_LONG).show();
+	        	//Toast.makeText(LoginActivity.this, "被选中!",Toast.LENGTH_LONG).show();
 	        	whether_save=true;
 	        }
 	        else
-	        	Toast.makeText(LoginActivity.this, "取消选中!",Toast.LENGTH_LONG).show();
+	        	//Toast.makeText(LoginActivity.this, "取消选中!",Toast.LENGTH_LONG).show();
 	        	whether_save=false;
 	        }
         });//end setOnCheckedChangeListener
