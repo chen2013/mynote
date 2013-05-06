@@ -156,7 +156,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 //				intentView.putExtra("position", position);
 //				listView = getLocalActivityManager().startActivity("listView", intentView).getDecorView();
 //				
-				SharedPreferences pre = MyApplication.getInstance().getSharedPreferences("Store", Context.MODE_WORLD_WRITEABLE);
+				SharedPreferences pre = MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE);
 				Editor editor  = pre.edit();
 				editor.putInt("lastPosition", position);
 				editor.commit();
@@ -634,8 +634,10 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		        		        	editor.putInt("listCount", listCount-1);
 		        		        	editor.commit();
 		        		        	}
+		        		        else if(result==11)
+		        		        	Toast.makeText(MyApplication.getInstance(), "底层有数据", Toast.LENGTH_LONG).show();
 		        		        else
-		        		        	Toast.makeText(MyApplication.getInstance(), "底层有数据", Toast.LENGTH_LONG);
+		        		        	Toast.makeText(MyApplication.getInstance(), "未知原因，删除失败", Toast.LENGTH_LONG).show();
 		        		        cursor.close();
 		        		        list.close();
 		        		        InitView();

@@ -75,6 +75,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			memo.setCreate_time(cursor.getLong(cursor.getColumnIndex("create_time")));
 			memo.setStarrted(cursor.getInt(cursor.getColumnIndex("starrted")));
 			memo.setDue_date(cursor.getLong(cursor.getColumnIndex("due_date")));
+			Log.v("getAllEvent_duetime", "time:"+cursor.getLong(cursor.getColumnIndex("due_date")));
 			memo.setCompleted(cursor.getInt(cursor.getColumnIndex("completed")));
 			memo.setRepeat_type(cursor.getInt(cursor.getColumnIndex("repeat_type")));
 			list.add(memo);
@@ -86,7 +87,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 	{
 		String sql  = "select * from "+dbTable+" where rowId="+rowId;
 		Cursor cursor = sqlliteDatabase.rawQuery(sql, null);
-		if(null == cursor) return null;
+		if(null == cursor)return null;
 		List<Memo> list = new ArrayList<Memo>();
 		while(cursor.moveToNext())
 		{
@@ -94,8 +95,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 			memo.setItem_id(cursor.getString(cursor.getColumnIndex("item_id")));
 			memo.setItem_content(cursor.getString(cursor.getColumnIndex("item_content")));
 			memo.setCreate_time(cursor.getLong(cursor.getColumnIndex("create_time")));
+			memo.setDue_date(cursor.getLong(4));
+			Log.v("getAnEvent_duetime", "time:"+cursor.getLong(cursor.getColumnIndex("due_date")));
 			memo.setStarrted(cursor.getInt(cursor.getColumnIndex("starrted")));
-			memo.setDue_date(cursor.getLong(cursor.getColumnIndex("due_date")));
 			memo.setCompleted(cursor.getInt(cursor.getColumnIndex("completed")));
 			memo.setRepeat_type(cursor.getInt(cursor.getColumnIndex("repeat_type")));
 			list.add(memo);

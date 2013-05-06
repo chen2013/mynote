@@ -117,8 +117,8 @@ public class FinishActivity extends Activity {
 				Memo memo = (Memo)arg1.getTag();
 				final EditText con = (EditText)reset.findViewById(R.id.content);
 				final Button btn = (Button)reset.findViewById(R.id.del);
-				final Button setbtn1 = (Button)reset.findViewById(R.id.setTimeBtn);
-				final Button setbtn2 = (Button)reset.findViewById(R.id.setDataBtn);
+				final Button setbtn1 = (Button)reset.findViewById(R.id.modifyTimeBtn);
+				final Button setbtn2 = (Button)reset.findViewById(R.id.modifyDateBtn);
 				setbtn1.setVisibility(View.INVISIBLE);
 				setbtn2.setVisibility(View.INVISIBLE);
 				btn.setVisibility(View.INVISIBLE);

@@ -3,6 +3,7 @@ package edu.sdust.mynote;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,12 +14,17 @@ import edu.sdust.mynote.bean.Memo;
 import edu.sdust.mynote.bean.Note;
 import edu.sdust.mynote.database.DatabaseHelper;
 import edu.sdust.mynote.database.Lists;
+import edu.sdust.mynote.function.DealWithDate;
 import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.service.HttpPostRequest;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.app.AlertDialog.Builder;
+import android.app.DatePickerDialog.OnDateSetListener;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +43,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnCreateContextMenuListener;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -44,6 +51,7 @@ import android.widget.RadioButton;
 import android.widget.SimpleAdapter;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -57,8 +65,20 @@ public class StoreUpActivity extends Activity {
 	String event_id_longClick = "";
  	int getResult= 20;
 	String event_id=""; 
+	Date modifyDateTime = new Date();
+	String modifyDateStr="";
+	String modifyTimeStr="";
+	
+    final int DIALOG_TIME = 0;    //设置对话框id  
+    final int DIALOG_DATE = 1;	//dialog/id
+   
+    private boolean isSetDate = false;
+    private boolean isSetTime = false;
+    private Calendar cal = Calendar.getInstance();
+	
  	Intent intent = this.getIntent();
 	HttpPostRequest request = new HttpPostRequest();
+	DealWithDate dealWithDate = new DealWithDate();
 	DatabaseHelper databaseHelper = new DatabaseHelper(MyApplication.getInstance(), "gtask", 1, dbCreate, "memo");
     public Lists list =new Lists(MyApplication.getInstance());
 	
@@ -91,14 +111,13 @@ public class StoreUpActivity extends Activity {
     	
     	databaseHelper.open();
     	
-    	List<Memo> list = databaseHelper.selectAll();
+    	List<Memo> lists = databaseHelper.selectAll();
     	listView = (MyDragListView)findViewById(R.id.storeUpList);
     	List<Integer> va = new ArrayList<Integer>();
     	//List<Map<String,String>> resultList = new ArrayList<Map<String,String>>();
 
-		Calendar cal = Calendar.getInstance();
 		int i = 0;
-    	for (Memo memo : list) {
+    	for (Memo memo : lists) {
 			//Map<String,String> map = new HashMap<String, String>();
 			//map.put("title", memo.getTitle());
 			//map.put("content", memo.getContent());
@@ -113,7 +132,7 @@ public class StoreUpActivity extends Activity {
 			va.add(i++);
 		}
     	
-    	adapter = new DragListAdapter(this, titles,top, drawables,list);
+    	adapter = new DragListAdapter(this, titles,top, drawables,lists);
     	
        	listView.setAdapter(adapter);
     	
@@ -182,33 +201,54 @@ public class StoreUpActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						// TODO Auto-generated method stub
-						
-						 Memo memo = new Memo();
-						 memo.setItem_content(con.getText().toString());
-						 memo.setItem_id(id);
-						 if(((RadioButton)reset.findViewById(R.id.radio0)).isChecked())
-						 {
-							 memo.setStarrted(0);
-						 } else if(((RadioButton)reset.findViewById(R.id.radio1)).isChecked())
-						 {
-							 memo.setStarrted(1);
-						 } else
-						 {
-							 memo.setStarrted(2);
-						 }
-						
-						 databaseHelper.updata(memo);
+										
 						 
 						 List<Memo> list = databaseHelper.selectByKey(arg2+1);
 						 for (Memo memo1:list){
+							 Memo memo = new Memo();
+							 memo.setItem_content(con.getText().toString());
+							 memo.setItem_id(id);
+							 if(((RadioButton)reset.findViewById(R.id.radio0)).isChecked())
+							 {
+								 memo.setStarrted(0);
+							 } else if(((RadioButton)reset.findViewById(R.id.radio1)).isChecked())
+							 {
+								 memo.setStarrted(1);
+							 } else
+							 {
+								 memo.setStarrted(2);
+							 }
 							 request.modifyEventContent(memo1.getItem_id(), memo.getItem_content());
 //							 request.modifyStarrted(memo1.getItem_id());
 							 if (starred==1 && ((RadioButton)reset.findViewById(R.id.radio0)).isChecked())
 								 request.modifyStarrted(memo1.getItem_id());
 							 else if (starred==0 && ((RadioButton)reset.findViewById(R.id.radio1)).isChecked())
 								 request.modifyStarrted(memo1.getItem_id());
-								 
-						 }
+							 if (isSetDate){
+								 if (request.modifyDate(memo1.getItem_id(), dealWithDate.dateToStr(cal.getTime()))==0){
+									 modifyDateTime.setTime(memo1.getDue_date());
+									 
+									 modifyTimeStr=dealWithDate.timeToStr(modifyDateTime);
+									 
+									 Log.v("cur dateTime","cur dateTime"+modifyTimeStr);
+									 modifyDateStr =dealWithDate.dateToStr(cal.getTime());
+									 memo.setDue_date(dealWithDate.strToDateLong(modifyDateStr+" "+modifyTimeStr).getTime());
+									 databaseHelper.updata(memo);
+								 }
+							 }
+							 if (isSetTime){
+								 if (request.modifyTime(memo1.getItem_id(), dealWithDate.dateToStr(cal.getTime()))==0){
+									 
+									 modifyDateTime.setTime(memo1.getDue_date());
+									 
+									 modifyDateStr=dealWithDate.dateToStr(modifyDateTime);
+									 
+									 modifyTimeStr =dealWithDate.timeToStr(cal.getTime());
+									 memo.setDue_date(dealWithDate.strToDateLong(modifyDateStr+" "+modifyTimeStr).getTime());
+									 databaseHelper.updata(memo);
+								 }
+							 }
+						 } 
 						 init();
 						 Toast.makeText(StoreUpActivity.this, "保存成功", 3000).show();
 					}
@@ -222,6 +262,26 @@ public class StoreUpActivity extends Activity {
 					}
 				});
 				builderCreate =  builder.create();builderCreate.show();//从工厂中取得dialog对象
+				
+				Button modify_time = (Button)reset.findViewById(R.id.modifyTimeBtn);
+				modify_time.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						showDialog(DIALOG_TIME);
+					}
+				});
+				
+				Button modify_date = (Button)reset.findViewById(R.id.modifyDateBtn);
+				modify_date.setOnClickListener(new OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						// TODO Auto-generated method stub
+						showDialog(DIALOG_DATE);
+					}
+				});
 			}
     		
 		});
@@ -321,6 +381,8 @@ public class StoreUpActivity extends Activity {
     	//SimpleAdapter adapter = new SimpleAdapter(this, resultList, R.layout.line, new String[]{"title","content"}, new int[]{R.id.title,R.id.content});
     	//listView.setAdapter(adapter);
     	
+		
+		
     	
     	databaseHelper.close();
 
@@ -402,6 +464,57 @@ public class StoreUpActivity extends Activity {
 		                return true;
 		 
 		        }
+	
+	
+	
+	
+	
+	
+	@Override
+    protected Dialog onCreateDialog(int id) {  
+        Dialog dialog=null;  
+        switch (id) {  
+        case DIALOG_TIME:  
+            dialog=new TimePickerDialog(  
+                    this,   
+                    new TimePickerDialog.OnTimeSetListener(){  
+                        public void onTimeSet(TimePicker timePicker, int hourOfDay,int minute) {  
+                            
+                           
+                            cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                            cal.set(Calendar.MINUTE, minute);
+                            cal.set(Calendar.SECOND, 0);
+                            cal.set(Calendar.MILLISECOND, 0);
+          
+                            isSetTime = true;
+                          // alarmManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), pi);       
+                            //设置闹钟，当前时间就唤醒  
+                           
+                        }  
+                    },   
+                    Calendar.getInstance().get(Calendar.HOUR_OF_DAY),   
+                    Calendar.getInstance().get(Calendar.MINUTE),  
+                    false);  
+ 
+            break;  
+        case DIALOG_DATE:
+        	dialog = new DatePickerDialog(this, new OnDateSetListener() {
+				
+				@Override
+				public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
+					// TODO Auto-generated method stub
+				
+					isSetDate = true;
+					cal.set(Calendar.YEAR, arg1);
+					cal.set(Calendar.MONTH, arg2);
+					cal.set(Calendar.DAY_OF_MONTH, arg3);
+					
+				}
+			}, Calendar.getInstance().get(Calendar.YEAR), Calendar.getInstance().get(Calendar.MONTH), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+        	break;
+        }  
+        return dialog;  
+    }
 
 
  

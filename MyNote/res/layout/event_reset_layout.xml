@@ -55,13 +55,13 @@
         android:text="更改时间"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id = "@+id/setTimeBtn"
+        android:id = "@+id/modifyTimeBtn"
         />
     <Button
         android:text = "更改日期"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/setDataBtn"
+        android:id="@+id/modifyDateBtn"
         />
     </LinearLayout>
 </LinearLayout>

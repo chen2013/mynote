@@ -116,7 +116,9 @@ public class AddNewEventActivity extends Activity {
 				
 				//获得当前处在那个list中
 				SharedPreferences prefer=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-		        int position = prefer.getInt("position", 0);
+		        int position = prefer.getInt("lastPosition", 0);
+		        
+		        Log.v("xianzai de position", "position"+position);
 		         
 		         
 		        list.open();
@@ -192,7 +194,7 @@ public class AddNewEventActivity extends Activity {
             		if (request.addNewEvent(memo.getItem_content(), curList,dealWithDate.dateToStr(date),dealWithDate.timeToStr(date),starred)!=0){
             			Toast.makeText(MyApplication.getInstance(), "添加失败~", Toast.LENGTH_LONG).show();
             			databaseHelper.close();
-            			finish();
+            			AddNewEventActivity.this.finish();
             		}
     				String event_id=prefer.getString("newEvent", "0");
     				
