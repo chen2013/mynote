@@ -53,7 +53,7 @@ public class LoginActivity extends Activity{
 				proDialog.dismiss();
 			}
 			if (result == false) {
-				Toast.makeText(LoginActivity.this, "验证失败，请检查您的用户名和密码！",Toast.LENGTH_SHORT).show();
+				Toast.makeText(LoginActivity.this, "验证失败，请检查您的用户名和密码！",Toast.LENGTH_LONG).show();
 			}else{
 				Toast.makeText(LoginActivity.this, "绑定成功!",Toast.LENGTH_LONG).show();
 				request.getAllList();
@@ -86,116 +86,7 @@ public class LoginActivity extends Activity{
         setContentView(R.layout.login_layout);
        
         
-        //点击界面下方选项的按钮事件
-	    ImageButton imageButton=(ImageButton)this.findViewById(R.id.login_option);
-	    imageButton.setOnClickListener(new OnClickListener() {
-	
-			@Override
-			public void onClick(View v) {
-				openOptionsMenu();  
-			}
-		
-	    });//end imageButton.setOnClickListener
-	    
-	    //注册新账号的点击事件
-	    TextView regTextView=(TextView)this.findViewById(R.id.register_new_acc_id);
-	    regTextView.setOnClickListener(new OnClickListener(){
-	    	@Override
-	    	public void onClick(View v){
-	    		Intent regIntent=new Intent(LoginActivity.this,RegisterActivity.class);
-	    		startActivity(regIntent);
-	    	}
-	    });//end regTextView.setOnClickListener
-	    
-	    
-	    
-	    
-	    //获取是否已经存在用户和密码
-	    username =(EditText)findViewById(R.id.login_edit_account);        
-        password = (EditText)findViewById(R.id.login_edit_pwd);
-        
-        SharedPreferences preferences;
-        preferences = getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-        String read_username = preferences.getString("username", "");
-        String read_password = preferences.getString("password", "");
-        if(read_username != ""){
-        	username.setText(read_username);
-        }
-        if(read_password != ""){
-        	password.setText(read_password);
-        }
-        
-        
-        //点击复选框的操作
-        CheckBox checkbox=(CheckBox)this.findViewById(R.id.login_cb_savepwd);
-        checkbox.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener()
-        {
-         
-	        @Override
-	        public void onCheckedChanged(CompoundButton buttonView,boolean isChecked) {
-	        // TODO Auto-generated method stub
-	        if(isChecked)
-	        {
-	        	//Toast.makeText(LoginActivity.this, "被选中!",Toast.LENGTH_LONG).show();
-	        	whether_save=true;
-	        }
-	        else
-	        	//Toast.makeText(LoginActivity.this, "取消选中!",Toast.LENGTH_LONG).show();
-	        	whether_save=false;
-	        }
-        });//end setOnCheckedChangeListener
-
-	    
-        
-        //点击登陆时的操作
-        Button loginButton =(Button)this.findViewById(R.id.login_btn_login);
-        loginButton.setOnClickListener(new OnClickListener(){
-
-        	    @Override
-        		public void onClick(View v) {
-        			// TODO Auto-generated method stub
-        			r_username =  username.getText().toString();
-        			r_password =  password.getText().toString();
-        			if(r_username.equals("") || r_password.equals("")){
-        				Toast.makeText(LoginActivity.this, "您填写的数据不能为空!",Toast.LENGTH_LONG).show();
-        			}else{
-        	        	if(HttpRequest.isNetworkAvailable(LoginActivity.this) == false){
-        	        		new AlertDialog.Builder(LoginActivity.this)  
-        	                .setTitle("开启网络服务")  
-        	                .setMessage("本软件需要使用网络资源，是否开启网络？")  
-        	                .setPositiveButton("确定", new DialogInterface.OnClickListener() {  
-        	                      
-        	                    @Override  
-        	                    public void onClick(DialogInterface dialog, int which) {  
-        	                        // Go to the activity of settings of wireless  
-        	                        Intent intentToNetwork = new Intent("/");  
-        	                        ComponentName componentName = new ComponentName(  
-        	                                "com.android.settings",  
-        	                                "com.android.settings.WirelessSettings"  
-        	                        );  
-        	                        intentToNetwork.setComponent(componentName);  
-        	                        intentToNetwork.setAction("android.intent.action.VIEW");  
-        	                        startActivity(intentToNetwork);  
-       	                        dialog.cancel();  
-        	                    }  
-        	                })  
-        	                .setNegativeButton("否", new DialogInterface.OnClickListener() {  
-        	                      
-        	                    @Override  
-        	                    public void onClick(DialogInterface dialog, int which) {  
-       	                        dialog.cancel();  
-        	                    }  
-        	                })  
-        	                .show();  
-        	        	}//end if
-        	        	else{
-        					proDialog = ProgressDialog.show(LoginActivity.this, "验证中..","验证中..请稍后....", true, true);     					
-        					Thread loginThread = new Thread(new checkFailureHandler());
-        					loginThread.start();
-        	        	}//end else
-        			}
-        		}//onClick 函数结束
-        });
+        mainFunction();
     }//onCreate 函数结束
     
     
@@ -219,7 +110,17 @@ public class LoginActivity extends Activity{
 		
         setContentView(R.layout.login_layout);
        
-        
+        mainFunction();
+	}//end onResume
+
+
+
+
+
+
+	private void mainFunction() {
+		// TODO Auto-generated method stub
+
         //点击界面下方选项的按钮事件
 	    ImageButton imageButton=(ImageButton)this.findViewById(R.id.login_option);
 	    imageButton.setOnClickListener(new OnClickListener() {
@@ -330,7 +231,7 @@ public class LoginActivity extends Activity{
         			}
         		}//onClick 函数结束
         });
-	}//end onResume
+	}
 
 
 

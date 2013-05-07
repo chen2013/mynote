@@ -235,11 +235,6 @@ public class HttpPostRequest {
                 editor.commit();
                 
                 
-                //将新创建的列表信息加入本地数据库
-                lists.open();
-                lists.insertItem(list_id, list_name, dealWithDate.dateToStr(new Date()), 0, "0");
-                lists.close();
-                
                 return res;
             	}
             else{

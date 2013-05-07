@@ -67,8 +67,8 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/share_list" 
-                    android:id="@+id/share_list"/>
+                    android:background="@drawable/navigation_top_bar_refresh_btn" 
+                    android:id="@+id/refresh_list"/>
 
                 <ImageView
                     android:layout_width="wrap_content"

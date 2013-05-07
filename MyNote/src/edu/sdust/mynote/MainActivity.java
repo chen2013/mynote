@@ -63,6 +63,7 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 	public static String[] title;
 	
 	
+	
 	public static final int SNAP_VELOCITY = 400;
 	
 	private VelocityTracker velocityTracker;
@@ -764,14 +765,14 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 			}		
     	});
 
-    	ImageView shareList = (ImageView)findViewById(R.id.share_list);
-    	shareList.setOnClickListener(new OnClickListener(){
+    	ImageView refreshList = (ImageView)findViewById(R.id.refresh_list);
+    	refreshList.setOnClickListener(new OnClickListener(){
 
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				Intent shareListIntent = new Intent(MainActivity.this,ShareListActivity.class);
-				startActivity(shareListIntent);			
+				request.getAllList();
+				InitView();
 			}
     		
     	});
