@@ -122,6 +122,18 @@ public class SettingActivity extends Activity {
 			}
 
 		});
+		
+		TextView modifyPwd = (TextView)findViewById(R.id.setting_modify);
+		modifyPwd.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent toModifyPwd = new Intent(SettingActivity.this,ModifyPwdActivity.class);
+				startActivity(toModifyPwd);
+			}
+			
+		});
 	}
 
 }

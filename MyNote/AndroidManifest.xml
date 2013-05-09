@@ -63,11 +63,14 @@
 	    >
 	    </activity>
 	    
-	    	    <activity android:name="edu.sdust.mynote.NoteListActivity"
+	    <activity android:name="edu.sdust.mynote.NoteListActivity"
 	    		  android:theme="@android:style/Theme.NoTitleBar"
 	    >
 	    </activity>
-	    
+	    <activity android:name="edu.sdust.mynote.ModifyPwdActivity"
+	    		  android:theme="@android:style/Theme.NoTitleBar"
+	    >
+	    </activity>
 	    
 	    
         <receiver android:name="edu.sdust.mynote.receiver.AlarmReceiver"></receiver>

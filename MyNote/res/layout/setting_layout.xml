@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:text="setting"
+                android:text="设置"
                 android:textColor="@android:color/background_light"
                 android:textSize="20sp" />
     </RelativeLayout>
@@ -57,7 +57,7 @@
 				<TextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:layout_marginTop="5dip"
+					android:layout_marginTop="10dip"
 					android:layout_marginLeft="15dip"
 					android:text="清楚密码"
 					android:textSize="16dip"
@@ -70,8 +70,33 @@
 					android:layout_marginTop="5dip"
 					android:layout_marginLeft="15dip"
 					android:text="将清除您的账号密码以保护隐私"
-					android:textSize="12dip"
-					android:id="@+id/setting_clear">
+					android:textSize="12dip">
+					
+				</TextView>
+				<ImageView
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+					android:src="@drawable/line"
+					android:layout_margin="1dip"
+					android:layout_marginTop="5dip">
+				</ImageView>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="5dip"
+					android:layout_marginLeft="15dip"
+					android:text="修改密码"
+					android:textSize="16dip"
+					android:id="@+id/setting_modify">
+					
+				</TextView>
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="5dip"
+					android:layout_marginLeft="15dip"
+					android:text="常修改密码，使您的账号更加安全"
+					android:textSize="12dip">
 					
 				</TextView>
 				<ImageView
@@ -96,8 +121,7 @@
 					android:layout_marginTop="5dip"
 					android:layout_marginLeft="15dip"
 					android:text="将您宝贵的意见反馈给我们"
-					android:textSize="12dip"
-					android:id="@+id/setting_clear"/>
+					android:textSize="12dip"/>
 				<ImageView
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
@@ -120,8 +144,7 @@
 					android:layout_marginTop="5dip"
 					android:layout_marginLeft="15dip"
 					android:text="点击这里，会有更多惊喜"
-					android:textSize="12dip"
-					android:id="@+id/setting_clear"/>
+					android:textSize="12dip"/>
 				<ImageView
 					android:layout_width="fill_parent"
 					android:layout_height="wrap_content"
@@ -144,8 +167,7 @@
 					android:layout_marginTop="5dip"
 					android:layout_marginLeft="15dip"
 					android:text="换一个账号~你会得到更多~"
-					android:textSize="12dip"
-					android:id="@+id/setting_clear">
+					android:textSize="12dip">
 				</TextView>
 				<ImageView
 					android:layout_width="fill_parent"

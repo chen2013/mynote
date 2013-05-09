@@ -178,6 +178,74 @@ public class HttpPostRequest {
 		            }
 		        return res;
 		}
+	
+	
+	
+	
+	//获取注册的返回数据
+	public int modifyPwd(String oldPassword,String newPassword){
+		 
+		
+		 	    
+		        /*建立HTTPost对象*/
+		        HttpPost httpPost = new HttpPost(SettingIP.GetIP()+"User.php");        
+		        HttpClient client = new DefaultHttpClient();
+		        StringBuilder builder = new StringBuilder();     
+		        SharedPreferences token=MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+		        String token_c=token.getString("token", "");
+		        int res = 20;
+
+		        /*
+		         * NameValuePair实现请求参数的封装
+		       */
+		        List<NameValuePair> params = new ArrayList<NameValuePair>(); 
+		        params.add(new BasicNameValuePair("action","changepass"));
+		        params.add(new BasicNameValuePair("old_password", oldPassword)); 
+		        params.add(new BasicNameValuePair("new_password", newPassword));
+		        params.add(new BasicNameValuePair("token",token_c));
+		        try {
+				    httpPost.setEntity(new UrlEncodedFormEntity(params,"UTF-8"));
+				} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				}
+		        try 
+		        {
+		            //HttpResponse httpResponse = client.execute(httpRequest);
+		        	HttpResponse httpResponse = client.execute(httpPost);
+		            int resInt = httpResponse.getStatusLine().getStatusCode();
+		            if (resInt == 200) { 
+		                /* 
+		                 * 当返回码为200时，做处理 
+		                 * 得到服务器端返回json数据，并做处理 
+		                 * */  
+		                BufferedReader bufferedReader = new BufferedReader( 
+		                        new InputStreamReader(httpResponse.getEntity().getContent(),"UTF-8"));  
+		                for (String s = bufferedReader.readLine(); s != null; s = bufferedReader
+		                        .readLine()) {
+		                    builder.append(s); 
+		                } 	   
+		                
+		                DealWithString deal=new DealWithString();
+		                String string=deal.strToJson(builder.toString());
+		                Log.v("tohear-register",string);
+		                JSONObject jsonObject = new JSONObject(string);//需要去掉前边一段乱码
+		                res = jsonObject.getInt("error_code");
+		                
+		                return res;
+		            	}
+		            else{
+		            	Log.v("res","meiyou renhe xiangying");
+		            }
+		            }
+		            catch (Exception e) {
+				    	 Log.v("url response", "false");
+				    	 e.printStackTrace();
+		            }
+		       return res;
+	}
+	
+	
 	//新建列表列表,返回错误代码~~~
 	public int addNewList(String list_name){
 		/*建立HTTPost对象*/
