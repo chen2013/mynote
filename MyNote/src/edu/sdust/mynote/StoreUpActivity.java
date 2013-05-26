@@ -182,7 +182,15 @@ public class StoreUpActivity extends Activity {
 					public void onClick(View arg0) {
 						// TODO Auto-generated method stub
 						
-						
+						SharedPreferences preference = MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+						int position = preference.getInt("lastPosition", 0);
+								list.open();
+				         Cursor cursor=list.getItem(position+1);
+				         cursor.moveToFirst();
+				         curList = cursor.getString(0);
+				         cursor.close();
+				         
+				         list.close();
 						List<Memo> list=databaseHelper.selectByKey(arg2+1);
 						for (Memo memo :list){
 							Log.v("从这里"+arg2+"查询到的item_id",memo.getItem_id()+"kongde" );

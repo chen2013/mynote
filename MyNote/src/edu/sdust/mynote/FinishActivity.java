@@ -10,14 +10,18 @@ import java.util.Map;
 import edu.sdust.mynote.adapter.DragListAdapter;
 import edu.sdust.mynote.bean.Memo;
 import edu.sdust.mynote.database.DatabaseHelper;
+import edu.sdust.mynote.database.Lists;
 import edu.sdust.mynote.pull.R;
 import edu.sdust.mynote.service.HttpPostRequest;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.KeyEvent;
@@ -45,6 +49,8 @@ public class FinishActivity extends Activity {
 	private ListView listView;
 	private DragListAdapter adapter;
 	private String event_id="";
+	private String curList;
+	Lists listDB = new Lists(MyApplication.getInstance());
 	HttpPostRequest request =new HttpPostRequest();
 	
 	
@@ -147,15 +153,27 @@ public class FinishActivity extends Activity {
 				});
 				builder.setPositiveButton("删除", new DialogInterface.OnClickListener() {//设置dialog
 					
+					
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						// TODO Auto-generated method stub
 						String item_id=null;
 						List<Memo> list=databaseHelper.selectByKey(arg2+1);
+						
+						//获取当前所处的列表ID
+						SharedPreferences preference = MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
+						int position = preference.getInt("lastPosition", 0);
+						listDB.open();
+				        Cursor cursor=listDB.getItem(position+1);
+				        cursor.moveToFirst();
+				        curList = cursor.getString(0);
+				        cursor.close();
+				        listDB.close();
+				        
 						for (Memo memo :list){
 							item_id=memo.getItem_id();
 							databaseHelper.deleteById(item_id);
-							request.deleteEvent("D9E12762AC824E4BDC02C00212CC37E1", item_id);
+							request.deleteEvent(curList, item_id);
 						}
 	
 						 init();

@@ -604,6 +604,10 @@ public class MainActivity extends ActivityGroup implements OnTouchListener,
 		final int pos = (int) info.position;// 这里的info.id对应的就是数据库中rowId的值
 		                
 		Log.v("chang an shijian ", ""+pos+1);
+		SharedPreferences pre = MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_WRITEABLE);
+		Editor editor_1  = pre.edit();
+		editor_1.putInt("longClickPosition", pos);
+		editor_1.commit();
 		 
 		list.open();
         final Cursor cursor=list.getItem(pos+1);

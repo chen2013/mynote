@@ -48,7 +48,7 @@ public class ShareListActivity extends Activity {
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				SharedPreferences preference = MyApplication.getInstance().getSharedPreferences("store", Context.MODE_WORLD_READABLE);
-				int position = preference.getInt("position", 0);
+				int position = preference.getInt("longClickPosition", 0);
 						list.open();
 		         Cursor cursor=list.getItem(position+1);
 		         cursor.moveToFirst();
