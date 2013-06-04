@@ -196,10 +196,16 @@ public class StoreUpActivity extends Activity {
 							Log.v("从这里"+arg2+"查询到的item_id",memo.getItem_id()+"kongde" );
 							String item_id=memo.getItem_id();
 							databaseHelper.deleteById(item_id);
-							request.deleteEvent(curList, item_id);
+							int result = request.deleteEvent(curList, item_id);
+							if (result == 0)
+								Toast.makeText(StoreUpActivity.this, "删除成功", Toast.LENGTH_LONG).show();
+							else if(result == 11)
+								Toast.makeText(StoreUpActivity.this, "下层有数据", Toast.LENGTH_LONG).show();
+							else 
+								Toast.makeText(StoreUpActivity.this, "未知原因，删除失败", Toast.LENGTH_LONG).show();
 						}
 						init();
-						Toast.makeText(StoreUpActivity.this, "删除", 3000).show();
+						
 						StoreUpActivity.this.closeOptionsMenu();
 						builderCreate.dismiss();
 					}

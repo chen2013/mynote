@@ -226,10 +226,10 @@ public class AddNewEventActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				databaseHelper.open();
-				databaseHelper.deleteAll("memo");
-				databaseHelper.deleteAll("memo01");
-				databaseHelper.close();
+				EditText event_content = (EditText)findViewById(R.id.event_content);
+				event_content.setText("");
+				((RadioButton)findViewById(R.id.radio0)).setChecked(true);
+				cal.setTimeInMillis(System.currentTimeMillis());
 			}
 		});
     	checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
