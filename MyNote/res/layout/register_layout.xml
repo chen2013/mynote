@@ -3,13 +3,13 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/feedback_bg"
+    android:background="@drawable/splash_bg"
     >
     <RelativeLayout
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
 	    android:layout_height="47dip"
-	    android:background="@drawable/title_bar_bg">
+	    android:background="@drawable/nav_bg">
 	    <Button
 		    android:id="@+id/register_back_btn"
 			android:layout_width="40dip"

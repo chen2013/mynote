@@ -3,14 +3,15 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  android:orientation="vertical" >
+  android:orientation="vertical" 
+  android:background="@drawable/splash_bg">
   
     <LinearLayout 
     android:gravity="center_vertical" 
     android:orientation="horizontal"  
     android:layout_width="fill_parent" 
     android:layout_height="44.0dip"
-    android:background="@drawable/title_bar_bg"> 
+    android:background="@drawable/nav_bg"> 
     
         <TextView 
         android:textSize="18.0sp" 
